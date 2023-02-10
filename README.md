@@ -4,7 +4,7 @@ Get your answers in 6 different languages English, Hindi, French, German, Madari
 
 This project offers an AI-powered online Bhagavad Gita experience. Based on the 18 chapters and 700 shlokas, it provides moral, strength, discipline, and spiritual guidance to help alleviate Arjuna's troubles.
 
-### Check Out app video on YouTube: https://www.youtube.com/shorts/LKj8Ch9f_us
+### Check Out app video on YouTube: https://www.youtube.com/shorts/3f2n_mS1DTs
 
 
 <img src="https://user-images.githubusercontent.com/7702191/217727798-66866075-82ab-40bb-bc20-0861d69b4724.jpg" width="15%"></img> 
