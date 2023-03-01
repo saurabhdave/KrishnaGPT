@@ -1,6 +1,6 @@
 # KrishnaGPT SwiftUI iOS App
 Krishna GPT: This SwiftUI MVVM based app, influenced by the teachings of the Bhagavad Gita, provides answers with a spiritual perspective to help you uncover hidden truths.
-Get your answers in 6 different languages English, Hindi, French, German, Madarin and Spanish.
+Get your answers in 6 different languages English, Hindi, French, German, Mandarin and Spanish.
 
 This project offers an AI-powered online Bhagavad Gita experience. Based on the 18 chapters and 700 shlokas, it provides moral, strength, discipline, and spiritual guidance to help alleviate Arjuna's troubles.
 
