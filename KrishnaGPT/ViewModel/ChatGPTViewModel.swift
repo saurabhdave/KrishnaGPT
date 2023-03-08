@@ -8,12 +8,12 @@
 import Foundation
 
 final class ChatGPTViewModel: ObservableObject {
-        
+    
     @Published var isInteractingWithChatGPT = false
     @Published var messages: [MessageRow] = []
     @Published var inputMessage: String = ""
     @Published var selectedLanguage = LanguageType.english // 2
-
+    
     private let chatGPTApi: ChatGPTAPI
     
     init(api: ChatGPTAPI) {
@@ -59,6 +59,12 @@ final class ChatGPTViewModel: ObservableObject {
         let text = inputMessage
         inputMessage = ""
         await send(text: text)
+    }
+    
+    @MainActor
+    func clearMessages() {
+        self.chatGPTApi.deleteHistoryList()
+        self.messages.removeAll()
     }
     
     @MainActor

@@ -19,6 +19,15 @@ struct ContentView: View {
         chatListView
             .navigationTitle("🦚 Bhagavad Gita AI")
             .toolbar {
+                
+                Button {
+                    withAnimation {
+                        viewModel.clearMessages()
+                    }
+                } label: {
+                    Label ("Clear", systemImage: "trash.slash")
+                }
+                
                 Menu(content: {
                     Picker("Pick a language", selection: $viewModel.selectedLanguage) {
                         ForEach(LanguageType.allCases, id: \.self) { item in // 4
