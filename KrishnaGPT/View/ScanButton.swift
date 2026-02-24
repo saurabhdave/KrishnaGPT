@@ -20,6 +20,8 @@ struct ScanButton: UIViewRepresentable {
           UIImage(systemName: "camera.badge.ellipsis"),
           for: .normal)
         button.menu = UIMenu(children: [textFromCamera])
+        button.accessibilityLabel = "Scan text from camera"
+        button.accessibilityHint = "Opens the camera to scan text and insert it into the message"
         return button
     }
     

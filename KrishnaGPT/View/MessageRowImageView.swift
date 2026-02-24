@@ -13,25 +13,37 @@ struct MessageRowImageView: View {
     
     var body: some View {
         if image.hasPrefix("http"), let url = URL(string: image) {
-            AsyncImage(url: url) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 30, height: 30, alignment: .center)
-                    .clipShape(
-                        Circle()
-                    )
-            } placeholder: {
-                ProgressView()
+            AsyncImage(url: url) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                        .frame(width: 30, height: 30)
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 30, height: 30)
+                        .clipped()
+                        .clipShape(Circle())
+                case .failure:
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 30, height: 30)
+                        .clipped()
+                        .clipShape(Circle())
+                        .foregroundColor(.gray)
+                @unknown default:
+                    EmptyView()
+                }
             }
         } else {
             Image(image)
                 .resizable()
-                .scaledToFit()
-                .frame(width: 30, height: 30, alignment: .center)
-                .clipShape(
-                    Circle()
-                )
+                .scaledToFill()
+                .frame(width: 30, height: 30)
+                .clipped()
+                .clipShape(Circle())
         }
     }
 }

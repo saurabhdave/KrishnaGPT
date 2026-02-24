@@ -47,11 +47,11 @@ struct MessageRowView: View {
                     }
                     .foregroundColor(.accentColor)
                     .padding(.top)
+                    .accessibilityHint("Retries generating the response for this message")
                 }
                 
                 if showDotLoading {
                     DotsLoadingView()
-                        .frame(width: 60, height: 30)
                 }
             }
         }// HSTACK

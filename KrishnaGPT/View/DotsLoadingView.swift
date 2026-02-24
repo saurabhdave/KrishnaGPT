@@ -31,7 +31,7 @@ struct DotsLoadingView: View {
             }
         }
         .onAppear {
-            self.animateDots.toggle()
+            self.animateDots = true
         }
     }
 }

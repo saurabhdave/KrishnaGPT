@@ -53,7 +53,7 @@ final class ChatGPTAPI {
     private func generateChatGPTMessage(from text: String) -> [Message] {
         var messages = [systemMessage] + historyList + [Message(role: "user", content: text + selectedLanguageString)]
         
-        if messages.contentCount > (4000 * 4) { // equivalent of 4 tokes
+        if messages.contentCount > (4000 * 4) { // equivalent of 4 tokens per character, approximate
             _ = historyList.dropFirst()
             messages = generateChatGPTMessage(from: text)
         }
@@ -71,6 +71,9 @@ extension ChatGPTAPI {
     private func appendToHistoryList(userText: String, responseText: String) {
         self.historyList.append(.init(role: "user", content: userText))
         self.historyList.append(.init(role: "assistant", content: responseText))
+        if historyList.count > 100 {
+            historyList.removeFirst(2) // Remove oldest user-assistant pair
+        }
     }
     
     func setChatGPTLanguage(languageType: LanguageType) {
