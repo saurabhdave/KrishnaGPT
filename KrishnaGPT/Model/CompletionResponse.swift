@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - Legacy Chat Completions Models
+
 struct Choice: Decodable {
     let message: Message
     let finishReason: String?
@@ -63,4 +65,39 @@ struct StreamMessage: Decodable {
 
 struct StreamCompletionResponse: Decodable {
     let choices: [StreamChoice]
+}
+
+// MARK: - Responses API Models
+
+struct ResponsesRequest: Encodable {
+    let model: String
+    let instructions: String
+    let input: [ResponseInputItem]
+    let stream: Bool
+    let temperature: Double
+}
+
+struct ResponseInputItem: Encodable {
+    let role: String
+    let content: String
+}
+
+struct ResponsesAPIResponse: Decodable {
+    let output: [ResponseOutputItem]
+}
+
+struct ResponseOutputItem: Decodable {
+    let type: String?
+    let content: [ResponseOutputContent]?
+}
+
+struct ResponseOutputContent: Decodable {
+    let type: String?
+    let text: String?
+}
+
+struct ResponsesStreamEvent: Decodable {
+    let type: String
+    let delta: String?
+    let error: ErrorResponse?
 }
