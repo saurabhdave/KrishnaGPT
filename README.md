@@ -15,7 +15,7 @@ This project offers an AI-powered online Bhagavad Gita experience. Based on the 
 
 ## UPDATE
 
-The leaked model had been removed by OpenAI. Until a new model is found, i'll use the default text-davinci-003
+It's using Official ChatGPT API endpoints with `gpt-3.5-turbo` model
 
 ## Supported Platforms
 
@@ -30,6 +30,17 @@ The leaked model had been removed by OpenAI. Until a new model is found, i'll us
 ```swift
 let api = ChatGPTAPI(apiKey: "API_KEY")
 ```
+
+optionally, you can provide the system prompt, temperature, and model. Default values for these parameters are:
+```swift
+public init(apiKey: String,
+        model: String = "gpt-3.5-turbo",
+        systemPrompt: String = "You are a helpful assistant",
+        temperature: Double = 0.5)
+```
+
+To learn more about those parameters, you can visit the official [ChatGPT API documentation](https://platform.openai.com/docs/guides/chat/introduction) and [ChatGPT API Introduction Page](https://openai.com/blog/introducing-chatgpt-and-whisper-apis)
+
 
 ## How it works
 
