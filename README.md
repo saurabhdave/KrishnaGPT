@@ -33,12 +33,12 @@ https://www.youtube.com/shorts/3f2n_mS1DTs
 ## Setup
 
 1. Open `KrishnaGPT.xcodeproj` in Xcode.
-2. Update [`KrishnaGPT/App/Config.plist`](KrishnaGPT/App/Config.plist).
+2. Update [`KrishnaGPT/AppConfig/Config.plist`](KrishnaGPT/AppConfig/Config.plist).
 3. Build and run the `KrishnaGPT` scheme.
 
 ## Configuration
 
-Configuration is read by [`KrishnaGPT/App/AppConfig.swift`](KrishnaGPT/App/AppConfig.swift) from `Config.plist`.
+Configuration is read by [`KrishnaGPT/AppConfig/AppConfig.swift`](KrishnaGPT/AppConfig/AppConfig.swift) from `Config.plist`.
 
 Supported keys:
 
