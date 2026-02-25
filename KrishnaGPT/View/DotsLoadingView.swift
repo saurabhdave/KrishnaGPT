@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DotsLoadingView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var animateDots = false
     
     private let numberOfDots: Int
@@ -21,17 +22,24 @@ struct DotsLoadingView: View {
             ForEach(0..<numberOfDots, id: \.self) { i in
                 Circle()
                     .frame(width: 8, height: 8)
-                    .scaleEffect(self.animateDots ? 1 : 0.3)
-                    .opacity(self.animateDots ? 1 : 0.3)
+                    .scaleEffect(reduceMotion ? 1 : (animateDots ? 1 : 0.3))
+                    .opacity(reduceMotion ? 1 : (animateDots ? 1 : 0.3))
                     .animation(
                         Animation.easeOut(duration: 1)
                             .repeatForever(autoreverses: true)
                             .delay(Double(i) * 0.3)
-                        , value: self.animateDots)
+                        , value: animateDots
+                    )
             }
         }
         .onAppear {
-            self.animateDots = true
+            guard !reduceMotion else { return }
+            if !animateDots {
+                animateDots = true
+            }
+        }
+        .onDisappear {
+            animateDots = false
         }
     }
 }

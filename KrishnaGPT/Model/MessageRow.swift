@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MessageRow: Identifiable {
+struct MessageRow: Identifiable, Equatable {
     
     let id = UUID()
     var isInteractingWithChatGPT: Bool

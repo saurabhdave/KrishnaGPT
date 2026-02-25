@@ -12,8 +12,9 @@ struct ContentView: View {
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: ChatGPTViewModel
     @FocusState var isTextFieldFocused: Bool
+    @State private var lastAutoScrollCharacterCount = 0
     
-    let hapticImpact = UIImpactFeedbackGenerator(style: .medium)
+    private let hapticImpact = UIImpactFeedbackGenerator(style: .medium)
     
     var body: some View {
         chatListView
@@ -30,13 +31,17 @@ struct ContentView: View {
                 
                 Menu(content: {
                     Picker("Pick a language", selection: $viewModel.selectedLanguage) {
-                        ForEach(LanguageType.allCases, id: \.self) { item in // 4
-                            Text(item.rawValue.capitalized) // 5
+                        ForEach(LanguageType.allCases, id: \.self) { item in
+                            Text(item.rawValue.capitalized)
                         }
                     }
                 },
                      label: { Label ("Language", systemImage: "character.bubble") })
-            }.disabled(viewModel.isInteractingWithChatGPT)
+            }
+            .disabled(viewModel.isInteractingWithChatGPT)
+            .onAppear {
+                hapticImpact.prepare()
+            }
         
     }
     
@@ -46,11 +51,12 @@ struct ContentView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(viewModel.messages) { message in
-                            MessageRowView(message: message) { retryMessage in
+                            MessageRowView(message: message, isLightMode: colorScheme == .light) { retryMessage in
                                 Task { @MainActor in
                                     await viewModel.retry(message:retryMessage)
                                 }
                             }
+                            .equatable()
                         }
                     }
                     .onTapGesture {
@@ -61,14 +67,28 @@ struct ContentView: View {
                 Divider()
                 
                 bottomView(image: "profile", proxy: proxy)
-                
-                Spacer()
             }// VSTACK
-            .onChange(of: viewModel.messages.last?.responseText) { _ in
-                scrollToBottom(proxy: proxy)
+            .onChange(of: viewModel.messages.count) { _ in
+                lastAutoScrollCharacterCount = 0
+                scrollToBottom(proxy: proxy, animated: true)
+            }
+            .onChange(of: viewModel.messages.last?.responseText) { text in
+                guard viewModel.isInteractingWithChatGPT else { return }
+                
+                let currentCharacterCount = text?.count ?? 0
+                let shouldAutoScroll = currentCharacterCount - lastAutoScrollCharacterCount >= 80
+                if shouldAutoScroll {
+                    lastAutoScrollCharacterCount = currentCharacterCount
+                    scrollToBottom(proxy: proxy)
+                }
+            }
+            .onChange(of: viewModel.isInteractingWithChatGPT) { isInteracting in
+                if !isInteracting {
+                    scrollToBottom(proxy: proxy, animated: true)
+                }
             }
         }// ScrollViewReader
-        .background(colorScheme == .light ? .white : Color(red: 52/255, green: 53/255, blue: 65/255, opacity: 0.5))
+        .background(contentBackgroundColor)
     }
     
     func bottomView(image: String, proxy: ScrollViewProxy) -> some View {
@@ -110,8 +130,23 @@ struct ContentView: View {
     }
     
     private func scrollToBottom(proxy: ScrollViewProxy) {
+        scrollToBottom(proxy: proxy, animated: false)
+    }
+    
+    private func scrollToBottom(proxy: ScrollViewProxy, animated: Bool) {
         guard let lastMessageID = viewModel.messages.last?.id else { return }
-        proxy.scrollTo(lastMessageID, anchor: .bottomTrailing)
+        
+        if animated {
+            withAnimation {
+                proxy.scrollTo(lastMessageID, anchor: .bottom)
+            }
+        } else {
+            proxy.scrollTo(lastMessageID, anchor: .bottom)
+        }
+    }
+    
+    private var contentBackgroundColor: Color {
+        colorScheme == .light ? .white : Color(red: 52/255, green: 53/255, blue: 65/255, opacity: 0.5)
     }
 }
 
