@@ -1,47 +1,73 @@
 # KrishnaGPT SwiftUI iOS App
-Krishna GPT: This SwiftUI MVVM based app, influenced by the teachings of the Bhagavad Gita, provides answers with a spiritual perspective to help you uncover hidden truths.
-Get your answers in 6 different languages English, Hindi, French, German, Mandarin and Spanish.
 
-This project offers an AI-powered online Bhagavad Gita experience. Based on the 18 chapters and 700 shlokas, it provides moral, strength, discipline, and spiritual guidance to help alleviate Arjuna's troubles.
+KrishnaGPT is a SwiftUI + MVVM iOS app inspired by the Bhagavad Gita.  
+It answers in a spiritual and conversational style and supports 6 languages:
+English, Hindi, French, German, Mandarin, and Spanish.
 
-### Check Out app video on YouTube: https://www.youtube.com/shorts/3f2n_mS1DTs
+### App video
+https://www.youtube.com/shorts/3f2n_mS1DTs
 
-
-<img src="https://user-images.githubusercontent.com/7702191/217727798-66866075-82ab-40bb-bc20-0861d69b4724.jpg" width="15%"></img> 
+<img src="https://user-images.githubusercontent.com/7702191/217727798-66866075-82ab-40bb-bc20-0861d69b4724.jpg" width="15%"></img>
 <img src="https://user-images.githubusercontent.com/7702191/217727725-7cc3a52a-1554-4d5d-9477-6f9194559fdd.jpg" width="15%"></img>
 <img src="https://user-images.githubusercontent.com/7702191/217727743-badb8f8b-a34d-4671-8d28-d45b57d7b940.jpg" width="15%"></img>
-<img src="https://user-images.githubusercontent.com/7702191/217727778-1255cab8-3e07-4424-9906-3d81df556346.jpg" width="15%"></img> 
-<img src="https://user-images.githubusercontent.com/7702191/217727789-04ae3de6-1f7a-401b-8276-11510b3ff8dd.jpg" width="15%"></img> 
+<img src="https://user-images.githubusercontent.com/7702191/217727778-1255cab8-3e07-4424-9906-3d81df556346.jpg" width="15%"></img>
+<img src="https://user-images.githubusercontent.com/7702191/217727789-04ae3de6-1f7a-401b-8276-11510b3ff8dd.jpg" width="15%"></img>
 
-## UPDATE
+## Tech stack
 
-It's using Official ChatGPT API endpoints with `gpt-3.5-turbo` model
-
-## Supported Platforms
-
-- iOS 15 and above
-
-## Requierements
-- Xcode 14 
-- Register for API key from [OpenAI](https://openai.com/api)
-- Create API Key
-- Paste API key in KrishnaGPTApp file where the ChatGPTAPI instance is declared
+- SwiftUI + MVVM
+- OpenAI Responses API
+- Streaming responses in UI
+- SPM dependency: `SDOpenAIClientKit`
 
 ```swift
-let api = ChatGPTAPI(apiKey: "API_KEY")
+.package(url: "https://github.com/saurabhdave/SDOpenAIClientKit.git", branch: "main")
 ```
 
-optionally, you can provide the system prompt, temperature, and model. Default values for these parameters are:
-```swift
-public init(apiKey: String,
-        model: String = "gpt-3.5-turbo",
-        systemPrompt: String = "You are a helpful assistant",
-        temperature: Double = 0.5)
+## Requirements
+
+- Xcode 14+
+- iOS 15+
+- OpenAI API key from https://openai.com/api
+
+## Setup
+
+1. Open `KrishnaGPT.xcodeproj` in Xcode.
+2. Update [`KrishnaGPT/App/Config.plist`](KrishnaGPT/App/Config.plist).
+3. Build and run the `KrishnaGPT` scheme.
+
+## Configuration
+
+Configuration is read by [`KrishnaGPT/App/AppConfig.swift`](KrishnaGPT/App/AppConfig.swift) from `Config.plist`.
+
+Supported keys:
+
+- `OPENAI_API_KEY` (required)
+- `OPENAI_MODEL` (optional, default: `gpt-4.1-mini`)
+- `OPENAI_SYSTEM_PROMPT` (optional, app default prompt used if missing)
+- `OPENAI_TEMPERATURE` (optional, default: `0.5`)
+
+Example:
+
+```xml
+<key>OPENAI_API_KEY</key>
+<string>sk-...</string>
+<key>OPENAI_MODEL</key>
+<string>gpt-4.1-mini</string>
+<key>OPENAI_SYSTEM_PROMPT</key>
+<string>You are Krishna...</string>
+<key>OPENAI_TEMPERATURE</key>
+<real>0.5</real>
 ```
 
-To learn more about those parameters, you can visit the official [ChatGPT API documentation](https://platform.openai.com/docs/guides/chat/introduction) and [ChatGPT API Introduction Page](https://openai.com/blog/introducing-chatgpt-and-whisper-apis)
+## Architecture
 
+- [`KrishnaGPT/App/KrishnaGPTApp.swift`](KrishnaGPT/App/KrishnaGPTApp.swift) initializes the API client using `AppConfig`.
+- [`KrishnaGPT/Networking/ChatGPTAPI.swift`](KrishnaGPT/Networking/ChatGPTAPI.swift) is a thin wrapper over `SDOpenAIClient` (`OpenAIClient`).
+- [`KrishnaGPT/ViewModel/ChatGPTViewModel.swift`](KrishnaGPT/ViewModel/ChatGPTViewModel.swift) handles streaming state and UI updates.
+- [`KrishnaGPT/View/ContentView.swift`](KrishnaGPT/View/ContentView.swift) renders chat and language selection.
 
 ## How it works
 
-This initiative employs the OpenAI GPT-3 API, specifically the text-davinci-003, in a streaming manner. It formulates a prompt based on the user's input and the desired format, then forwards it to the GPT-3 API. The received response is then streamed back to the app.
+User input + selected language instruction is sent to OpenAI Responses API via `SDOpenAIClientKit`.  
+Tokens are streamed back and rendered incrementally in the chat UI.

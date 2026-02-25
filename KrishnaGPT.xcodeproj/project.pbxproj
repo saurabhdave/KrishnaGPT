@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A4F1C0012D71E0C70018C001 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4F1C0042D71E0C70018C001 /* Config.plist */; };
+		A4F1C0022D71E0C70018C001 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F1C0052D71E0C70018C001 /* AppConfig.swift */; };
+		A4F1C0032D71E0C70018C001 /* SDOpenAIClient in Frameworks */ = {isa = PBXBuildFile; productRef = A4F1C0062D71E0C70018C001 /* SDOpenAIClient */; };
 		A329938A299169A40016F387 /* KrishnaGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3299389299169A40016F387 /* KrishnaGPTApp.swift */; };
 		A329938C299169A40016F387 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A329938B299169A40016F387 /* ContentView.swift */; };
 		A329938E299169A60016F387 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A329938D299169A60016F387 /* Assets.xcassets */; };
 		A3299391299169A60016F387 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3299390299169A60016F387 /* Preview Assets.xcassets */; };
 		A33EF7912992CD5B009189B9 /* ChatGPTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EF7902992CD5B009189B9 /* ChatGPTViewModel.swift */; };
 		A33EF7952992D651009189B9 /* ChatGPTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EF7942992D651009189B9 /* ChatGPTAPI.swift */; };
-		A33EF7982992E366009189B9 /* CompletionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EF7972992E366009189B9 /* CompletionResponse.swift */; };
 		A350AC1729940EE9003632B3 /* LanguageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A350AC1629940EE9003632B3 /* LanguageType.swift */; };
 		A3A4EAB62993645D00B1F473 /* ScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A4EAB52993645D00B1F473 /* ScanButton.swift */; };
 		A3EEC3F829932E5B00B376B8 /* MessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EEC3F729932E5B00B376B8 /* MessageRow.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A4F1C0042D71E0C70018C001 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
+		A4F1C0052D71E0C70018C001 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		A3299386299169A40016F387 /* KrishnaGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KrishnaGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3299389299169A40016F387 /* KrishnaGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KrishnaGPTApp.swift; sourceTree = "<group>"; };
 		A329938B299169A40016F387 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -30,7 +34,6 @@
 		A3299390299169A60016F387 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A33EF7902992CD5B009189B9 /* ChatGPTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTViewModel.swift; sourceTree = "<group>"; };
 		A33EF7942992D651009189B9 /* ChatGPTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTAPI.swift; sourceTree = "<group>"; };
-		A33EF7972992E366009189B9 /* CompletionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionResponse.swift; sourceTree = "<group>"; };
 		A350AC1629940EE9003632B3 /* LanguageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageType.swift; sourceTree = "<group>"; };
 		A3A4EAB52993645D00B1F473 /* ScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanButton.swift; sourceTree = "<group>"; };
 		A3EEC3F729932E5B00B376B8 /* MessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRow.swift; sourceTree = "<group>"; };
@@ -44,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4F1C0032D71E0C70018C001 /* SDOpenAIClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,7 +123,6 @@
 		A33EF7962992E309009189B9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A33EF7972992E366009189B9 /* CompletionResponse.swift */,
 				A3EEC3F729932E5B00B376B8 /* MessageRow.swift */,
 				A350AC1629940EE9003632B3 /* LanguageType.swift */,
 			);
@@ -129,6 +132,8 @@
 		A33EF7992992E922009189B9 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				A4F1C0052D71E0C70018C001 /* AppConfig.swift */,
+				A4F1C0042D71E0C70018C001 /* Config.plist */,
 				A3299389299169A40016F387 /* KrishnaGPTApp.swift */,
 			);
 			path = App;
@@ -151,12 +156,21 @@
 			);
 			name = KrishnaGPT;
 			packageProductDependencies = (
+				A4F1C0062D71E0C70018C001 /* SDOpenAIClient */,
 			);
 			productName = ScannerGPT;
 			productReference = A3299386299169A40016F387 /* KrishnaGPT.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A4F1C0062D71E0C70018C001 /* SDOpenAIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4F1C0072D71E0C70018C001 /* XCRemoteSwiftPackageReference "SDOpenAIClientKit" */;
+			productName = SDOpenAIClient;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin PBXProject section */
 		A329937E299169A40016F387 /* Project object */ = {
@@ -181,6 +195,7 @@
 			);
 			mainGroup = A329937D299169A40016F387;
 			packageReferences = (
+				A4F1C0072D71E0C70018C001 /* XCRemoteSwiftPackageReference "SDOpenAIClientKit" */,
 			);
 			productRefGroup = A3299387299169A40016F387 /* Products */;
 			projectDirPath = "";
@@ -196,6 +211,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4F1C0012D71E0C70018C001 /* Config.plist in Resources */,
 				A3299391299169A60016F387 /* Preview Assets.xcassets in Resources */,
 				A329938E299169A60016F387 /* Assets.xcassets in Resources */,
 			);
@@ -208,13 +224,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4F1C0022D71E0C70018C001 /* AppConfig.swift in Sources */,
 				A3A4EAB62993645D00B1F473 /* ScanButton.swift in Sources */,
 				A33EF7952992D651009189B9 /* ChatGPTAPI.swift in Sources */,
 				A329938C299169A40016F387 /* ContentView.swift in Sources */,
 				A3EEC3F829932E5B00B376B8 /* MessageRow.swift in Sources */,
 				A3EEC3FE2993531600B376B8 /* MessageRowImageView.swift in Sources */,
 				A33EF7912992CD5B009189B9 /* ChatGPTViewModel.swift in Sources */,
-				A33EF7982992E366009189B9 /* CompletionResponse.swift in Sources */,
 				A3EEC3FA2993349100B376B8 /* DotsLoadingView.swift in Sources */,
 				A329938A299169A40016F387 /* KrishnaGPTApp.swift in Sources */,
 				A3EEC3FC299337A700B376B8 /* MessageRowView.swift in Sources */,
@@ -223,6 +239,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A4F1C0072D71E0C70018C001 /* XCRemoteSwiftPackageReference "SDOpenAIClientKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/saurabhdave/SDOpenAIClientKit.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCBuildConfiguration section */
 		A3299392299169A60016F387 /* Debug */ = {

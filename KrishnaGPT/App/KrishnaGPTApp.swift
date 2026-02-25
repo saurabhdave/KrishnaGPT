@@ -9,10 +9,17 @@ import SwiftUI
 
 @main
 struct KrishnaGPTApp: App {
-    
-    static let apiKey = "API_KEY" // Use your API Key
+    @StateObject private var vm: ChatGPTViewModel
 
-    @StateObject var vm = ChatGPTViewModel(api: ChatGPTAPI(apiKey: KrishnaGPTApp.apiKey))
+    init() {
+        let api = ChatGPTAPI(
+            apiKey: AppConfig.apiKey,
+            model: AppConfig.model,
+            systemPrompt: AppConfig.systemPrompt,
+            temperature: AppConfig.temperature
+        )
+        _vm = StateObject(wrappedValue: ChatGPTViewModel(api: api))
+    }
 
     var body: some Scene {
         WindowGroup {

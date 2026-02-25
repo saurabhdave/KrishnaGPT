@@ -118,7 +118,16 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            ContentView(viewModel: ChatGPTViewModel(api: ChatGPTAPI(apiKey: KrishnaGPTApp.apiKey)))
+            ContentView(
+                viewModel: ChatGPTViewModel(
+                    api: ChatGPTAPI(
+                        apiKey: AppConfig.apiKey,
+                        model: AppConfig.model,
+                        systemPrompt: AppConfig.systemPrompt,
+                        temperature: AppConfig.temperature
+                    )
+                )
+            )
         }
     }
 }

@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "sdopenaiclientkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/saurabhdave/SDOpenAIClientKit.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "4c3cd2bc65238ff99ac64539cff0db791a3ca043"
+      }
+    }
+  ],
+  "version" : 2
+}
