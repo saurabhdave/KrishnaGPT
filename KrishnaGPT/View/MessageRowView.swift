@@ -36,6 +36,8 @@ struct MessageRowView: View, Equatable {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 8)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
     }
     
     private func messageRow(text: String, image: String, isUser: Bool, responseError: String? = nil, showDotLoading: Bool = false) -> some View {
@@ -75,7 +77,9 @@ struct MessageRowView: View, Equatable {
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.small)
-                    .accessibilityHint("Retries generating the response for this message")
+                    .accessibilityLabel("Regenerate response")
+                    .accessibilityHint("Retries generating the response for this message due to an error")
+                    .accessibilityAddTraits(.isButton)
                 }
                 
                 if showDotLoading {

@@ -18,7 +18,8 @@ struct ContentView: View {
     
     var body: some View {
         chatListView
-            .navigationTitle("🦚 Bhagavad Gita AI")
+            .navigationTitle("Bhagavad Gita AI")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 
                 Button {
@@ -28,6 +29,7 @@ struct ContentView: View {
                 } label: {
                     Label ("Clear", systemImage: "trash.slash")
                 }
+                .accessibilityHint("Clears all messages in the conversation and starts fresh")
                 
                 Menu(content: {
                     Picker("Pick a language", selection: $viewModel.selectedLanguage) {
@@ -37,6 +39,8 @@ struct ContentView: View {
                     }
                 },
                      label: { Label ("Language", systemImage: "character.bubble") })
+                .accessibilityLabel("Change conversation language")
+                .accessibilityHint("Currently set to \(viewModel.selectedLanguage.rawValue.capitalized)")
             }
             .disabled(viewModel.isInteractingWithChatGPT)
             .onAppear {
@@ -100,6 +104,8 @@ struct ContentView: View {
                 TextField("Ask Shri Krishna", text: $viewModel.inputMessage, axis: .vertical)
                     .textFieldStyle(.roundedBorder)
                     .focused($isTextFieldFocused)
+                    .accessibilityLabel("Message input")
+                    .accessibilityHint("Enter your question or message to ask Krishna")
                 
                 ScanButton(text: $viewModel.inputMessage)
                     .frame(width: 56, height: 56, alignment: .leading)
@@ -109,6 +115,8 @@ struct ContentView: View {
             if viewModel.isInteractingWithChatGPT {
                 DotsLoadingView()
                     .frame(width: 60, height: 30)
+                    .accessibilityLabel("Processing")
+                    .accessibilityHint("Krishna is thinking, please wait for a response")
             } else {
                 Button {
                     Task { @MainActor in
@@ -123,6 +131,8 @@ struct ContentView: View {
                         .rotationEffect(.degrees(45))
                         .font(.system(size: 30))
                 }
+                .accessibilityLabel("Send message")
+                .accessibilityHint("Sends your message to Krishna for a response")
                 .disabled(viewModel.inputMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
         }
