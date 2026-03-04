@@ -15,11 +15,13 @@ struct ScanButton: UIViewRepresentable {
         let textFromCamera = UIAction.captureTextFromCamera(
           responder: context.coordinator,
           identifier: nil)
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setImage(
           UIImage(systemName: "camera.badge.ellipsis"),
           for: .normal)
         button.menu = UIMenu(children: [textFromCamera])
+        button.showsMenuAsPrimaryAction = true
+        button.accessibilityTraits.insert(.button)
         button.accessibilityLabel = "Scan text from camera"
         button.accessibilityHint = "Opens the camera to scan text and insert it into the message"
         return button
@@ -51,4 +53,3 @@ struct ScanButton_Previews: PreviewProvider {
       .previewLayout(.sizeThatFits)
   }
 }
-

@@ -36,8 +36,7 @@ struct MessageRowView: View, Equatable {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 8)
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
+        .accessibilityElement(children: .contain)
     }
     
     private func messageRow(text: String, image: String, isUser: Bool, responseError: String? = nil, showDotLoading: Bool = false) -> some View {
@@ -58,6 +57,8 @@ struct MessageRowView: View, Equatable {
                         .lineSpacing(3)
                         .multilineTextAlignment(.leading)
                         .textSelection(.enabled)
+                        .accessibilityLabel(isUser ? "Your message" : "Krishna response")
+                        .accessibilityValue(text)
                 }
                 
                 if let error = responseError {
@@ -84,6 +85,7 @@ struct MessageRowView: View, Equatable {
                 
                 if showDotLoading {
                     DotsLoadingView()
+                        .accessibilityHidden(true)
                 }
             }
             .padding(.horizontal, 14)
@@ -108,7 +110,7 @@ struct MessageRowView: View, Equatable {
     }
     
     private func avatar(for image: String) -> some View {
-        MessageRowImageView(image: image)
+        MessageRowImageView(image: image, isDecorative: true)
             .frame(width: 34, height: 34)
             .background(Circle().fill(isLightMode ? Color.white : Color.black.opacity(0.28)))
             .overlay(

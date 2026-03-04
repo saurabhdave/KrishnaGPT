@@ -78,6 +78,17 @@ Best practice: do not commit or bundle production API secrets in app resources.
 - [`KrishnaGPT/ViewModel/ChatGPTViewModel.swift`](KrishnaGPT/ViewModel/ChatGPTViewModel.swift) handles streaming state and UI updates.
 - [`KrishnaGPT/View/ContentView.swift`](KrishnaGPT/View/ContentView.swift) renders chat and language selection.
 
+## AI Skills Used
+
+Accessibility improvements in this project were guided by the
+[`apple-accessibility-advisor`](https://github.com/saurabhdave/aiagents/tree/main/skills/apple-accessibility-advisor)
+skill from
+[saurabhdave/aiagents](https://github.com/saurabhdave/aiagents).
+
+The skill-driven pass improved VoiceOver behavior, reduced duplicate announcements,
+improved control semantics, and strengthened touch target/accessibility consistency
+across key chat UI components.
+
 ## How it works
 
 User input + selected language instruction is sent to OpenAI Responses API via `SDOpenAIClientKit`.  

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     
@@ -74,10 +75,11 @@ struct ContentView: View {
             }// VSTACK
             .onChange(of: viewModel.messages.count) { _ in
                 lastAutoScrollCharacterCount = 0
+                guard !isVoiceOverRunning else { return }
                 scrollToBottom(proxy: proxy, animated: true)
             }
             .onChange(of: viewModel.messages.last?.responseText) { text in
-                guard viewModel.isInteractingWithChatGPT else { return }
+                guard viewModel.isInteractingWithChatGPT, !isVoiceOverRunning else { return }
                 
                 let currentCharacterCount = text?.count ?? 0
                 let shouldAutoScroll = currentCharacterCount - lastAutoScrollCharacterCount >= 80
@@ -87,7 +89,7 @@ struct ContentView: View {
                 }
             }
             .onChange(of: viewModel.isInteractingWithChatGPT) { isInteracting in
-                if !isInteracting {
+                if !isInteracting, !isVoiceOverRunning {
                     scrollToBottom(proxy: proxy, animated: true)
                 }
             }
@@ -98,7 +100,7 @@ struct ContentView: View {
     func bottomView(image: String, proxy: ScrollViewProxy) -> some View {
         HStack(alignment: .center, spacing: 8) {
             
-            MessageRowImageView(image: image)
+            MessageRowImageView(image: image, isDecorative: true)
             
             HStack {
                 TextField("Ask Shri Krishna", text: $viewModel.inputMessage, axis: .vertical)
@@ -115,8 +117,6 @@ struct ContentView: View {
             if viewModel.isInteractingWithChatGPT {
                 DotsLoadingView()
                     .frame(width: 60, height: 30)
-                    .accessibilityLabel("Processing")
-                    .accessibilityHint("Krishna is thinking, please wait for a response")
             } else {
                 Button {
                     Task { @MainActor in
@@ -129,11 +129,12 @@ struct ContentView: View {
                 } label: {
                     Image(systemName: "paperplane.circle.fill")
                         .rotationEffect(.degrees(45))
-                        .font(.system(size: 30))
+                        .font(.title2)
                 }
                 .accessibilityLabel("Send message")
                 .accessibilityHint("Sends your message to Krishna for a response")
                 .disabled(viewModel.inputMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .frame(minWidth: 44, minHeight: 44)
             }
         }
         .padding(.horizontal, 16)
@@ -157,6 +158,10 @@ struct ContentView: View {
     
     private var contentBackgroundColor: Color {
         colorScheme == .light ? .white : Color(red: 52/255, green: 53/255, blue: 65/255, opacity: 0.5)
+    }
+    
+    private var isVoiceOverRunning: Bool {
+        UIAccessibility.isVoiceOverRunning
     }
 }
 

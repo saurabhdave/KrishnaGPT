@@ -10,6 +10,7 @@ import SwiftUI
 struct MessageRowImageView: View {
     
     var image: String
+    var isDecorative: Bool = false
     
     var body: some View {
         if image.hasPrefix("http"), let url = URL(string: image) {
@@ -37,6 +38,7 @@ struct MessageRowImageView: View {
                     EmptyView()
                 }
             }
+            .accessibilityHidden(isDecorative)
         } else {
             Image(image)
                 .resizable()
@@ -44,6 +46,7 @@ struct MessageRowImageView: View {
                 .frame(width: 30, height: 30)
                 .clipped()
                 .clipShape(Circle())
+                .accessibilityHidden(isDecorative)
         }
     }
 }
