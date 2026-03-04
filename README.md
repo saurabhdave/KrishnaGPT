@@ -33,32 +33,43 @@ https://www.youtube.com/shorts/3f2n_mS1DTs
 ## Setup
 
 1. Open `KrishnaGPT.xcodeproj` in Xcode.
-2. Update [`KrishnaGPT/AppConfig/Config.plist`](KrishnaGPT/AppConfig/Config.plist).
-3. Build and run the `KrishnaGPT` scheme.
+2. Select a shared scheme:
+   - `KrishnaGPT-Dev` (`APP_ENVIRONMENT=dev`)
+   - `KrishnaGPT-Staging` (`APP_ENVIRONMENT=staging`)
+   - `KrishnaGPT-Prod` (`APP_ENVIRONMENT=prod`)
+3. Set `OPENAI_API_KEY` in **Scheme > Edit Scheme > Run > Environment Variables** for the selected scheme.
+4. Build and run.
 
 ## Configuration
 
-Configuration is read by [`KrishnaGPT/AppConfig/AppConfig.swift`](KrishnaGPT/AppConfig/AppConfig.swift) from `Config.plist`.
+Configuration is read by [`KrishnaGPT/AppConfig/AppConfig.swift`](KrishnaGPT/AppConfig/AppConfig.swift).
 
-Supported keys:
+Environment selection precedence:
 
-- `OPENAI_API_KEY` (required)
+1. Runtime env var `APP_ENVIRONMENT` (scheme/CI)
+2. Build setting injected into Info.plist (`APP_ENVIRONMENT`)
+3. Fallback: `dev` for Debug builds, `prod` for Release builds
+
+Environment files:
+
+- [`KrishnaGPT/AppConfig/Config.dev.plist`](KrishnaGPT/AppConfig/Config.dev.plist)
+- [`KrishnaGPT/AppConfig/Config.staging.plist`](KrishnaGPT/AppConfig/Config.staging.plist)
+- [`KrishnaGPT/AppConfig/Config.prod.plist`](KrishnaGPT/AppConfig/Config.prod.plist)
+
+Shared Xcode schemes:
+
+- [`KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Dev.xcscheme`](KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Dev.xcscheme)
+- [`KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Staging.xcscheme`](KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Staging.xcscheme)
+- [`KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Prod.xcscheme`](KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Prod.xcscheme)
+
+Supported config keys in these files:
+
 - `OPENAI_MODEL` (optional, default: `gpt-4.1-mini`)
 - `OPENAI_SYSTEM_PROMPT` (optional, app default prompt used if missing)
 - `OPENAI_TEMPERATURE` (optional, default: `0.5`)
 
-Example:
-
-```xml
-<key>OPENAI_API_KEY</key>
-<string>sk-...</string>
-<key>OPENAI_MODEL</key>
-<string>gpt-4.1-mini</string>
-<key>OPENAI_SYSTEM_PROMPT</key>
-<string>You are Krishna...</string>
-<key>OPENAI_TEMPERATURE</key>
-<real>0.5</real>
-```
+`OPENAI_API_KEY` is read from runtime environment first.  
+Best practice: do not commit or bundle production API secrets in app resources.
 
 ## Architecture
 

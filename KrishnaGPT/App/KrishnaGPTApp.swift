@@ -12,6 +12,15 @@ struct KrishnaGPTApp: App {
     @StateObject private var vm: ChatGPTViewModel
 
     init() {
+#if DEBUG
+        if AppConfig.apiKey.isEmpty {
+            assertionFailure("""
+            OPENAI_API_KEY is empty.
+            Set OPENAI_API_KEY in Scheme > Run > Environment Variables for local development.
+            """)
+        }
+#endif
+
         let api = ChatGPTAPI(
             apiKey: AppConfig.apiKey,
             model: AppConfig.model,

@@ -23,6 +23,9 @@
 		A4F1C0022D71E0C70018C001 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F1C0052D71E0C70018C001 /* AppConfig.swift */; };
 		A4F1C0032D71E0C70018C001 /* SDOpenAIClient in Frameworks */ = {isa = PBXBuildFile; productRef = A4F1C0062D71E0C70018C001 /* SDOpenAIClient */; };
 		A4F1C0082D71E0C70018C001 /* AppConfig+ValueParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F1C0092D71E0C70018C001 /* AppConfig+ValueParsing.swift */; };
+		A4F1C00A2D71E0C70018C001 /* Config.dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4F1C00B2D71E0C70018C001 /* Config.dev.plist */; };
+		A4F1C00C2D71E0C70018C001 /* Config.staging.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4F1C00D2D71E0C70018C001 /* Config.staging.plist */; };
+		A4F1C00E2D71E0C70018C001 /* Config.prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4F1C00F2D71E0C70018C001 /* Config.prod.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		A4F1C0042D71E0C70018C001 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		A4F1C0052D71E0C70018C001 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		A4F1C0092D71E0C70018C001 /* AppConfig+ValueParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppConfig+ValueParsing.swift"; sourceTree = "<group>"; };
+		A4F1C00B2D71E0C70018C001 /* Config.dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.dev.plist; sourceTree = "<group>"; };
+		A4F1C00D2D71E0C70018C001 /* Config.staging.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.staging.plist; sourceTree = "<group>"; };
+		A4F1C00F2D71E0C70018C001 /* Config.prod.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.prod.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,16 +146,19 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		A37A29A82F4F9A4E000C195C /* AppConfig */ = {
-			isa = PBXGroup;
-			children = (
-				A4F1C0052D71E0C70018C001 /* AppConfig.swift */,
-				A4F1C0092D71E0C70018C001 /* AppConfig+ValueParsing.swift */,
-				A4F1C0042D71E0C70018C001 /* Config.plist */,
-			);
-			path = AppConfig;
-			sourceTree = "<group>";
-		};
+			A37A29A82F4F9A4E000C195C /* AppConfig */ = {
+				isa = PBXGroup;
+				children = (
+					A4F1C0052D71E0C70018C001 /* AppConfig.swift */,
+					A4F1C0092D71E0C70018C001 /* AppConfig+ValueParsing.swift */,
+					A4F1C0042D71E0C70018C001 /* Config.plist */,
+					A4F1C00B2D71E0C70018C001 /* Config.dev.plist */,
+					A4F1C00D2D71E0C70018C001 /* Config.staging.plist */,
+					A4F1C00F2D71E0C70018C001 /* Config.prod.plist */,
+				);
+				path = AppConfig;
+				sourceTree = "<group>";
+			};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -210,14 +219,17 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A3299384299169A40016F387 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A4F1C0012D71E0C70018C001 /* Config.plist in Resources */,
-				A3299391299169A60016F387 /* Preview Assets.xcassets in Resources */,
-				A329938E299169A60016F387 /* Assets.xcassets in Resources */,
-			);
+			A3299384299169A40016F387 /* Resources */ = {
+				isa = PBXResourcesBuildPhase;
+				buildActionMask = 2147483647;
+				files = (
+					A4F1C00E2D71E0C70018C001 /* Config.prod.plist in Resources */,
+					A4F1C00C2D71E0C70018C001 /* Config.staging.plist in Resources */,
+					A4F1C00A2D71E0C70018C001 /* Config.dev.plist in Resources */,
+					A4F1C0012D71E0C70018C001 /* Config.plist in Resources */,
+					A3299391299169A60016F387 /* Preview Assets.xcassets in Resources */,
+					A329938E299169A60016F387 /* Assets.xcassets in Resources */,
+				);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
@@ -362,6 +374,7 @@
 		A3299395299169A60016F387 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APP_ENVIRONMENT = dev;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -370,6 +383,7 @@
 				DEVELOPMENT_TEAM = LJ4XCD8HD3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_APP_ENVIRONMENT = "$(APP_ENVIRONMENT)";
 				INFOPLIST_KEY_CFBundleDisplayName = KrishnaGPT;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -392,6 +406,7 @@
 		A3299396299169A60016F387 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APP_ENVIRONMENT = prod;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -400,6 +415,7 @@
 				DEVELOPMENT_TEAM = LJ4XCD8HD3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_APP_ENVIRONMENT = "$(APP_ENVIRONMENT)";
 				INFOPLIST_KEY_CFBundleDisplayName = KrishnaGPT;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
