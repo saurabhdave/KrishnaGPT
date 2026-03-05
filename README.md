@@ -74,8 +74,8 @@ Best practice: do not commit or bundle production API secrets in app resources.
 ## Architecture
 
 - [`KrishnaGPT/App/KrishnaGPTApp.swift`](KrishnaGPT/App/KrishnaGPTApp.swift) initializes the API client using `AppConfig`.
-- [`KrishnaGPT/Networking/ChatGPTAPI.swift`](KrishnaGPT/Networking/ChatGPTAPI.swift) is a thin wrapper over `SDOpenAIClient` (`OpenAIClient`).
-- [`KrishnaGPT/ViewModel/ChatGPTViewModel.swift`](KrishnaGPT/ViewModel/ChatGPTViewModel.swift) handles streaming state and UI updates.
+- [`KrishnaGPT/Networking/ChatGPTAPI.swift`](KrishnaGPT/Networking/ChatGPTAPI.swift) conforms to a `ChatNetworking` protocol and wraps `SDOpenAIClient` (`OpenAIClient`).
+- [`KrishnaGPT/ViewModel/ChatGPTViewModel.swift`](KrishnaGPT/ViewModel/ChatGPTViewModel.swift) depends on `ChatNetworking` (not a concrete API type), owns conversation language state, and handles streaming UI updates.
 - [`KrishnaGPT/View/ContentView.swift`](KrishnaGPT/View/ContentView.swift) renders chat and language selection.
 
 ## AI Skills Used

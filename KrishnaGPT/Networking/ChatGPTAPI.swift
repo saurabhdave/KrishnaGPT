@@ -8,7 +8,13 @@
 import Foundation
 import SDOpenAIClient
 
-final class ChatGPTAPI {
+protocol ChatNetworking {
+    func sendMessageStream(text: String, language: LanguageType) async throws -> AsyncThrowingStream<String, Error>
+    func sendMessage(_ text: String, language: LanguageType) async throws -> String
+    func clearHistory() async
+}
+
+final class ChatGPTAPI: ChatNetworking {
     private enum Constants {
         static let maxContextCharacters = 16_000
         static let maxHistoryItems = 100
@@ -16,7 +22,6 @@ final class ChatGPTAPI {
     }
 
     private let openAIClient: OpenAIClient
-    private var selectedLanguage: LanguageType = .english
 
     init(
         apiKey: String,
@@ -42,27 +47,21 @@ final class ChatGPTAPI {
         )
     }
 
-    private var languageInstruction: String {
-        "Answer in \(selectedLanguage) and do not answer as the user."
+    private func languageInstruction(for language: LanguageType) -> String {
+        "Answer in \(language.rawValue) and do not answer as the user."
     }
 }
 
 extension ChatGPTAPI {
-    func setChatGPTLanguage(languageType: LanguageType) {
-        selectedLanguage = languageType
+    func sendMessageStream(text: String, language: LanguageType) async throws -> AsyncThrowingStream<String, Error> {
+        try await openAIClient.stream(text, additionalInstructions: languageInstruction(for: language))
     }
 
-    func sendMessageStream(text: String) async throws -> AsyncThrowingStream<String, Error> {
-        try await openAIClient.stream(text, additionalInstructions: languageInstruction)
+    func sendMessage(_ text: String, language: LanguageType) async throws -> String {
+        try await openAIClient.send(text, additionalInstructions: languageInstruction(for: language))
     }
 
-    func sendMessage(_ text: String) async throws -> String {
-        try await openAIClient.send(text, additionalInstructions: languageInstruction)
-    }
-
-    func deleteHistoryList() {
-        Task {
-            await openAIClient.clearHistory()
-        }
+    func clearHistory() async {
+        await openAIClient.clearHistory()
     }
 }

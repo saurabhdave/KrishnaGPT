@@ -13,7 +13,8 @@ struct KrishnaGPTApp: App {
 
     init() {
 #if DEBUG
-        if AppConfig.apiKey.isEmpty {
+        let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        if AppConfig.apiKey.isEmpty && !isRunningTests {
             assertionFailure("""
             OPENAI_API_KEY is empty.
             Set OPENAI_API_KEY in Scheme > Run > Environment Variables for local development.
@@ -27,7 +28,7 @@ struct KrishnaGPTApp: App {
             systemPrompt: AppConfig.systemPrompt,
             temperature: AppConfig.temperature
         )
-        _vm = StateObject(wrappedValue: ChatGPTViewModel(api: api))
+        _vm = StateObject(wrappedValue: ChatGPTViewModel(service: api))
     }
 
     var body: some Scene {

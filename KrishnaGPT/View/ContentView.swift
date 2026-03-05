@@ -24,8 +24,8 @@ struct ContentView: View {
             .toolbar {
                 
                 Button {
-                    withAnimation {
-                        viewModel.clearMessages()
+                    Task { @MainActor in
+                        await viewModel.clearMessages()
                     }
                 } label: {
                     Label ("Clear", systemImage: "trash.slash")
@@ -170,7 +170,7 @@ struct ContentView_Previews: PreviewProvider {
         NavigationStack {
             ContentView(
                 viewModel: ChatGPTViewModel(
-                    api: ChatGPTAPI(
+                    service: ChatGPTAPI(
                         apiKey: AppConfig.apiKey,
                         model: AppConfig.model,
                         systemPrompt: AppConfig.systemPrompt,

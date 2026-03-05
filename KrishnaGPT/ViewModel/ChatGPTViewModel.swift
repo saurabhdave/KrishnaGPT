@@ -12,17 +12,16 @@ final class ChatGPTViewModel: ObservableObject {
     @Published var isInteractingWithChatGPT = false
     @Published var messages: [MessageRow] = []
     @Published var inputMessage: String = ""
-    @Published var selectedLanguage = LanguageType.english // 2
+    @Published var selectedLanguage = LanguageType.english
     
-    private let chatGPTApi: ChatGPTAPI
+    private let chatService: ChatNetworking
     
-    init(api: ChatGPTAPI) {
-        self.chatGPTApi = api
+    init(service: ChatNetworking) {
+        self.chatService = service
     }
     
     @MainActor
     private func send(text: String) async {
-        self.setChatLanguage()
         isInteractingWithChatGPT = true
         var streamText = ""
         var msgRow = MessageRow(isInteractingWithChatGPT: true,
@@ -32,39 +31,42 @@ final class ChatGPTViewModel: ObservableObject {
                                 responseText: streamText,
                                 responseError: nil)
         
-        self.messages.append(msgRow)
+        messages.append(msgRow)
+        let messageIndex = messages.count - 1
         
         do {
-            let stream = try await chatGPTApi.sendMessageStream(text: text)
+            let stream = try await chatService.sendMessageStream(text: text, language: selectedLanguage)
             for try await text in stream {
                 streamText += text
                 msgRow.responseText = streamText.trimmingCharacters(in: .whitespacesAndNewlines)
-                self.messages[self.messages.count - 1] = msgRow
+                guard messages.indices.contains(messageIndex) else { break }
+                messages[messageIndex] = msgRow
             }
         } catch {
             msgRow.responseError = error.localizedDescription
         }
         
         msgRow.isInteractingWithChatGPT = false
-        self.messages[self.messages.count - 1] = msgRow
+        guard messages.indices.contains(messageIndex) else {
+            isInteractingWithChatGPT = false
+            return
+        }
+        messages[messageIndex] = msgRow
         isInteractingWithChatGPT = false
-    }
-    
-    func setChatLanguage() {
-        self.chatGPTApi.setChatGPTLanguage(languageType: selectedLanguage)
     }
     
     @MainActor
     func sendTapped() async {
-        let text = inputMessage
+        let text = inputMessage.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { return }
         inputMessage = ""
         await send(text: text)
     }
     
     @MainActor
-    func clearMessages() {
-        self.chatGPTApi.deleteHistoryList()
-        self.messages.removeAll()
+    func clearMessages() async {
+        await chatService.clearHistory()
+        messages.removeAll()
     }
     
     @MainActor

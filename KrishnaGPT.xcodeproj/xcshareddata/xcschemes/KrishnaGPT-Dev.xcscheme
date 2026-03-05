@@ -35,6 +35,16 @@
          </EnvironmentVariable>
       </EnvironmentVariables>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B10000000000000000000031"
+               BuildableName = "KrishnaGPTTests.xctest"
+               BlueprintName = "KrishnaGPTTests"
+               ReferencedContainer = "container:KrishnaGPT.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
