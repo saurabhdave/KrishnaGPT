@@ -15,29 +15,22 @@ protocol ChatNetworking {
 }
 
 final class ChatGPTAPI: ChatNetworking {
-    private enum Constants {
-        static let maxContextCharacters = 16_000
-        static let maxHistoryItems = 100
-        static let requestTimeout: TimeInterval = 60
-    }
-
     private let openAIClient: OpenAIClient
 
     init(
         apiKey: String,
-        model: String = "gpt-4.1-mini",
+        model: String = "gpt-5.4-mini",
         systemPrompt: String = "You are Krishna, answer according to the 18 chapters and 700 verses of the Bhagavad Gita, which contains life lessons on morality, strength, discipline and spirituality with relevent emoji. Professionally respond conversationally from Bhagavad Geeta and the chapter and verse labeled '1'. and '2.'.",
         temperature: Double = 0.5,
         urlSession: URLSession = .shared
-    ) {
-        let configuration = OpenAIClientConfiguration(
-            apiKey: apiKey,
-            model: model,
+    ) throws {
+        let configuration = try OpenAIClientConfiguration(
+            apiKey: APIKey(apiKey),
+            model: OpenAIModel(rawValue: model),
             systemPrompt: systemPrompt,
             temperature: temperature,
-            maxContextCharacters: Constants.maxContextCharacters,
-            maxHistoryItems: Constants.maxHistoryItems,
-            requestTimeout: Constants.requestTimeout,
+            historyTrimmingStrategy: .both(maxCharacters: 16_000, maxItems: 100),
+            requestTimeout: 60,
             retryPolicy: .standard
         )
 

@@ -1,13 +1,14 @@
-import XCTest
+import Testing
 @testable import KrishnaGPT
 
+@Suite("ChatGPTViewModel Tests")
 @MainActor
-final class ChatGPTViewModelTests: XCTestCase {
+struct ChatGPTViewModelTests {
     private enum TestError: Error {
         case mocked
     }
 
-    func testSendTappedStreamsResponseAndResetsInteractionState() async {
+    @Test func sendTappedStreamsResponseAndResetsInteractionState() async {
         let mock = MockChatService()
         mock.streamedResponses = [.success(["Hare", " Krishna"])]
 
@@ -17,33 +18,33 @@ final class ChatGPTViewModelTests: XCTestCase {
 
         await viewModel.sendTapped()
 
-        XCTAssertEqual(mock.sentRequests, [
+        #expect(mock.sentRequests == [
             MockChatService.SendRequest(text: "Explain dharma", language: .hindi)
         ])
-        XCTAssertEqual(viewModel.inputMessage, "")
-        XCTAssertFalse(viewModel.isInteractingWithChatGPT)
-        XCTAssertEqual(viewModel.messages.count, 1)
+        #expect(viewModel.inputMessage == "")
+        #expect(!viewModel.isInteractingWithChatGPT)
+        #expect(viewModel.messages.count == 1)
 
         let message = viewModel.messages[0]
-        XCTAssertEqual(message.sendText, "Explain dharma")
-        XCTAssertEqual(message.responseText, "Hare Krishna")
-        XCTAssertNil(message.responseError)
-        XCTAssertFalse(message.isInteractingWithChatGPT)
+        #expect(message.sendText == "Explain dharma")
+        #expect(message.responseText == "Hare Krishna")
+        #expect(message.responseError == nil)
+        #expect(!message.isInteractingWithChatGPT)
     }
 
-    func testSendTappedWithWhitespaceInputDoesNothing() async {
+    @Test func sendTappedWithWhitespaceInputDoesNothing() async {
         let mock = MockChatService()
         let viewModel = ChatGPTViewModel(service: mock)
         viewModel.inputMessage = "   \n\t  "
 
         await viewModel.sendTapped()
 
-        XCTAssertTrue(mock.sentRequests.isEmpty)
-        XCTAssertTrue(viewModel.messages.isEmpty)
-        XCTAssertEqual(viewModel.inputMessage, "   \n\t  ")
+        #expect(mock.sentRequests.isEmpty)
+        #expect(viewModel.messages.isEmpty)
+        #expect(viewModel.inputMessage == "   \n\t  ")
     }
 
-    func testClearMessagesCallsServiceAndClearsMessages() async {
+    @Test func clearMessagesCallsServiceAndClearsMessages() async {
         let mock = MockChatService()
         let viewModel = ChatGPTViewModel(service: mock)
 
@@ -60,11 +61,11 @@ final class ChatGPTViewModelTests: XCTestCase {
 
         await viewModel.clearMessages()
 
-        XCTAssertEqual(mock.clearHistoryCallCount, 1)
-        XCTAssertTrue(viewModel.messages.isEmpty)
+        #expect(mock.clearHistoryCallCount == 1)
+        #expect(viewModel.messages.isEmpty)
     }
 
-    func testRetryRemovesOldMessageAndSendsOriginalText() async {
+    @Test func retryRemovesOldMessageAndSendsOriginalText() async {
         let mock = MockChatService()
         mock.streamedResponses = [.success(["Retry response"])]
 
@@ -83,17 +84,17 @@ final class ChatGPTViewModelTests: XCTestCase {
 
         await viewModel.retry(message: failedMessage)
 
-        XCTAssertEqual(mock.sentRequests, [
+        #expect(mock.sentRequests == [
             MockChatService.SendRequest(text: "What is karma?", language: .mandarin)
         ])
-        XCTAssertEqual(viewModel.messages.count, 1)
-        XCTAssertEqual(viewModel.messages[0].sendText, "What is karma?")
-        XCTAssertEqual(viewModel.messages[0].responseText, "Retry response")
-        XCTAssertNil(viewModel.messages[0].responseError)
-        XCTAssertNotEqual(viewModel.messages[0].id, failedMessage.id)
+        #expect(viewModel.messages.count == 1)
+        #expect(viewModel.messages[0].sendText == "What is karma?")
+        #expect(viewModel.messages[0].responseText == "Retry response")
+        #expect(viewModel.messages[0].responseError == nil)
+        #expect(viewModel.messages[0].id != failedMessage.id)
     }
 
-    func testSendTappedStoresErrorOnStreamFailure() async {
+    @Test func sendTappedStoresErrorOnStreamFailure() async {
         let mock = MockChatService()
         mock.streamedResponses = [.failure(TestError.mocked)]
 
@@ -102,9 +103,9 @@ final class ChatGPTViewModelTests: XCTestCase {
 
         await viewModel.sendTapped()
 
-        XCTAssertEqual(viewModel.messages.count, 1)
-        XCTAssertNotNil(viewModel.messages[0].responseError)
-        XCTAssertFalse(viewModel.isInteractingWithChatGPT)
-        XCTAssertFalse(viewModel.messages[0].isInteractingWithChatGPT)
+        #expect(viewModel.messages.count == 1)
+        #expect(viewModel.messages[0].responseError != nil)
+        #expect(!viewModel.isInteractingWithChatGPT)
+        #expect(!viewModel.messages[0].isInteractingWithChatGPT)
     }
 }

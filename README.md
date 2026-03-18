@@ -18,16 +18,17 @@ https://www.youtube.com/shorts/3f2n_mS1DTs
 - SwiftUI + MVVM
 - OpenAI Responses API
 - Streaming responses in UI
-- SPM dependency: `SDOpenAIClientKit`
+- SPM dependency: `SDOpenAIClientKit` v2.0.0+ (typed `APIKey`, `OpenAIModel`, `HistoryTrimmingStrategy`)
+- Swift Testing (`@Test`, `#expect`, `@Suite`)
 
 ```swift
-.package(url: "https://github.com/saurabhdave/SDOpenAIClientKit.git", branch: "main")
+.package(url: "https://github.com/saurabhdave/SDOpenAIClientKit.git", from: "2.0.0")
 ```
 
 ## Requirements
 
-- Xcode 14+
-- iOS 15+
+- Xcode 16+
+- iOS 18+
 - OpenAI API key from https://openai.com/api
 
 ## Setup
@@ -64,7 +65,7 @@ Shared Xcode schemes:
 
 Supported config keys in these files:
 
-- `OPENAI_MODEL` (optional, default: `gpt-4.1-mini`)
+- `OPENAI_MODEL` (optional, default: `gpt-5.4-mini`)
 - `OPENAI_SYSTEM_PROMPT` (optional, app default prompt used if missing)
 - `OPENAI_TEMPERATURE` (optional, default: `0.5`)
 
@@ -73,10 +74,11 @@ Best practice: do not commit or bundle production API secrets in app resources.
 
 ## Architecture
 
-- [`KrishnaGPT/App/KrishnaGPTApp.swift`](KrishnaGPT/App/KrishnaGPTApp.swift) initializes the API client using `AppConfig`.
-- [`KrishnaGPT/Networking/ChatGPTAPI.swift`](KrishnaGPT/Networking/ChatGPTAPI.swift) conforms to a `ChatNetworking` protocol and wraps `SDOpenAIClient` (`OpenAIClient`).
+- [`KrishnaGPT/App/KrishnaGPTApp.swift`](KrishnaGPT/App/KrishnaGPTApp.swift) initializes the API client using `AppConfig`. `ChatGPTAPI` init is throwing (validated by `OpenAIClientConfiguration`).
+- [`KrishnaGPT/Networking/ChatGPTAPI.swift`](KrishnaGPT/Networking/ChatGPTAPI.swift) conforms to a `ChatNetworking` protocol and wraps `SDOpenAIClient.OpenAIClient` (an actor). Uses typed `APIKey`, `OpenAIModel`, and `HistoryTrimmingStrategy`.
 - [`KrishnaGPT/ViewModel/ChatGPTViewModel.swift`](KrishnaGPT/ViewModel/ChatGPTViewModel.swift) depends on `ChatNetworking` (not a concrete API type), owns conversation language state, and handles streaming UI updates.
 - [`KrishnaGPT/View/ContentView.swift`](KrishnaGPT/View/ContentView.swift) renders chat and language selection.
+- Tests use [Swift Testing](https://developer.apple.com/documentation/testing/) with `@Suite` and `@Test` macros, `#expect` assertions, and `@MainActor` isolation.
 
 ## AI Skills Used
 

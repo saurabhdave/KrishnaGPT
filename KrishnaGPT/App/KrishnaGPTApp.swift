@@ -22,13 +22,17 @@ struct KrishnaGPTApp: App {
         }
 #endif
 
-        let api = ChatGPTAPI(
-            apiKey: AppConfig.apiKey,
-            model: AppConfig.model,
-            systemPrompt: AppConfig.systemPrompt,
-            temperature: AppConfig.temperature
-        )
-        _vm = StateObject(wrappedValue: ChatGPTViewModel(service: api))
+        do {
+            let api = try ChatGPTAPI(
+                apiKey: AppConfig.apiKey,
+                model: AppConfig.model,
+                systemPrompt: AppConfig.systemPrompt,
+                temperature: AppConfig.temperature
+            )
+            _vm = StateObject(wrappedValue: ChatGPTViewModel(service: api))
+        } catch {
+            fatalError("Failed to create ChatGPTAPI: \(error)")
+        }
     }
 
     var body: some Scene {

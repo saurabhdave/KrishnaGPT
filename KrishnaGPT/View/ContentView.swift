@@ -170,7 +170,7 @@ struct ContentView_Previews: PreviewProvider {
         NavigationStack {
             ContentView(
                 viewModel: ChatGPTViewModel(
-                    service: ChatGPTAPI(
+                    service: try! ChatGPTAPI(
                         apiKey: AppConfig.apiKey,
                         model: AppConfig.model,
                         systemPrompt: AppConfig.systemPrompt,
