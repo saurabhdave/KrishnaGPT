@@ -47,8 +47,6 @@ struct DotsLoadingView: View {
     }
 }
 
-struct LoadingView_Previews: PreviewProvider {
-    static var previews: some View {
-        DotsLoadingView(numberOfDots: 5)
-    }
+#Preview {
+    DotsLoadingView(numberOfDots: 5)
 }

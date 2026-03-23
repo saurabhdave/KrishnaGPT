@@ -51,8 +51,6 @@ struct MessageRowImageView: View {
     }
 }
 
-struct MessageRowImageView_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageRowImageView(image: "profile")
-    }
+#Preview {
+    MessageRowImageView(image: MessageRow.userImage)
 }

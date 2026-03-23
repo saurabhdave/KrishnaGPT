@@ -9,6 +9,9 @@ import Foundation
 
 struct MessageRow: Identifiable, Equatable {
     
+    static let userImage = "profile"
+    static let assistantImage = "krishnaai"
+    
     let id = UUID()
     var isInteractingWithChatGPT: Bool
     

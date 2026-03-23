@@ -7,33 +7,37 @@
 
 import Foundation
 
+@MainActor
 final class ChatGPTViewModel: ObservableObject {
-    
+
     @Published var isInteractingWithChatGPT = false
     @Published var messages: [MessageRow] = []
     @Published var inputMessage: String = ""
     @Published var selectedLanguage = LanguageType.english
-    
+
+    var isSendDisabled: Bool {
+        inputMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
     private let chatService: ChatNetworking
-    
+
     init(service: ChatNetworking) {
         self.chatService = service
     }
-    
-    @MainActor
+
     private func send(text: String) async {
         isInteractingWithChatGPT = true
         var streamText = ""
         var msgRow = MessageRow(isInteractingWithChatGPT: true,
-                                sendImage: "profile",
+                                sendImage: MessageRow.userImage,
                                 sendText: text,
-                                responseImage: "krishnaai",
+                                responseImage: MessageRow.assistantImage,
                                 responseText: streamText,
                                 responseError: nil)
-        
+
         messages.append(msgRow)
         let messageIndex = messages.count - 1
-        
+
         do {
             let stream = try await chatService.sendMessageStream(text: text, language: selectedLanguage)
             for try await text in stream {
@@ -45,7 +49,7 @@ final class ChatGPTViewModel: ObservableObject {
         } catch {
             msgRow.responseError = error.localizedDescription
         }
-        
+
         msgRow.isInteractingWithChatGPT = false
         guard messages.indices.contains(messageIndex) else {
             isInteractingWithChatGPT = false
@@ -54,27 +58,24 @@ final class ChatGPTViewModel: ObservableObject {
         messages[messageIndex] = msgRow
         isInteractingWithChatGPT = false
     }
-    
-    @MainActor
+
     func sendTapped() async {
         let text = inputMessage.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
         inputMessage = ""
         await send(text: text)
     }
-    
-    @MainActor
+
     func clearMessages() async {
         await chatService.clearHistory()
         messages.removeAll()
     }
-    
-    @MainActor
+
     func retry(message: MessageRow) async {
         guard let index = messages.firstIndex(where: { $0.id == message.id }) else {
             return
         }
-        
+
         self.messages.remove(at: index)
         await send(text: message.sendText)
     }

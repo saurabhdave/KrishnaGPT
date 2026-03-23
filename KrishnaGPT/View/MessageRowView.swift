@@ -90,7 +90,25 @@ struct MessageRowView: View, Equatable {
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
-            .background(bubbleBackground(isUser: isUser))
+            .background {
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .fill(bubbleFillColor(isUser: isUser))
+                    .overlay {
+                        if isUser {
+                            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                .fill(
+                                    LinearGradient(
+                                        colors: [
+                                            Color(red: 0.23, green: 0.53, blue: 0.98),
+                                            Color(red: 0.19, green: 0.73, blue: 0.94)
+                                        ],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                        }
+                    }
+            }
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
                     .stroke(bubbleBorderColor(isUser: isUser), lineWidth: 1)
@@ -119,25 +137,11 @@ struct MessageRowView: View, Equatable {
             )
     }
     
-    private func bubbleBackground(isUser: Bool) -> some ShapeStyle {
+    private func bubbleFillColor(isUser: Bool) -> Color {
         if isUser {
-            return AnyShapeStyle(
-                LinearGradient(
-                    colors: [
-                        Color(red: 0.23, green: 0.53, blue: 0.98),
-                        Color(red: 0.19, green: 0.73, blue: 0.94)
-                    ],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
+            return .clear
         }
-        
-        return AnyShapeStyle(
-            isLightMode
-                ? Color.white
-                : Color(red: 44/255, green: 46/255, blue: 56/255)
-        )
+        return isLightMode ? .white : Color(red: 44/255, green: 46/255, blue: 56/255)
     }
     
     private func textForegroundColor(isUser: Bool) -> Color {
@@ -157,18 +161,14 @@ struct MessageRowView: View, Equatable {
     }
 }
 
-struct MessageRowView_Previews: PreviewProvider {
-    
-    static let message = MessageRow(
-        isInteractingWithChatGPT: true, sendImage: "profile",
+#Preview {
+    let message = MessageRow(
+        isInteractingWithChatGPT: true,
+        sendImage: MessageRow.userImage,
         sendText: "What is SwiftUI?",
-        responseImage: "krishnaai",
-        responseText: "SwiftUI is a user interface framework that allows developers to design and develop user interfaces for iOS, macOS, watchOS, and tvOS applications using Swift, a programming language developed by Apple Inc.")
-    
-    static var previews: some View {
-        MessageRowView(message: message, isLightMode: false) { messageRow in
-            
-        }.previewLayout(.sizeThatFits)
-            .background(Color(red: 52/255, green: 53/255, blue: 65/255, opacity: 0.5))
-    }
+        responseImage: MessageRow.assistantImage,
+        responseText: "SwiftUI is a user interface framework that allows developers to design and develop user interfaces for iOS, macOS, watchOS, and tvOS applications using Swift, a programming language developed by Apple Inc."
+    )
+    MessageRowView(message: message, isLightMode: false) { _ in }
+        .background(Color(red: 52/255, green: 53/255, blue: 65/255, opacity: 0.5))
 }

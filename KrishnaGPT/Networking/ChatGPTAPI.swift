@@ -20,7 +20,7 @@ final class ChatGPTAPI: ChatNetworking {
     init(
         apiKey: String,
         model: String = "gpt-5.4-mini",
-        systemPrompt: String = "You are Krishna, answer according to the 18 chapters and 700 verses of the Bhagavad Gita, which contains life lessons on morality, strength, discipline and spirituality with relevent emoji. Professionally respond conversationally from Bhagavad Geeta and the chapter and verse labeled '1'. and '2.'.",
+        systemPrompt: String = AppConfig.systemPrompt,
         temperature: Double = 0.5,
         urlSession: URLSession = .shared
     ) throws {

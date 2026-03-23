@@ -47,9 +47,6 @@ struct ScanButton: UIViewRepresentable {
 }
 
 
-struct ScanButton_Previews: PreviewProvider {
-  static var previews: some View {
+#Preview {
     ScanButton(text: .constant(""))
-      .previewLayout(.sizeThatFits)
-  }
 }
