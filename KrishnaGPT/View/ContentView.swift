@@ -9,19 +9,19 @@ import SwiftUI
 import UIKit
 
 struct ContentView: View {
-
+    
     @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: ChatGPTViewModel
     @FocusState var isTextFieldFocused: Bool
     @State private var lastAutoScrollCharacterCount = 0
     @State private var hapticImpact = UIImpactFeedbackGenerator(style: .medium)
-
+    
     var body: some View {
         chatListView
             .navigationTitle("Bhagavad Gita AI")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-
+                
                 Button {
                     Task {
                         await viewModel.clearMessages()
@@ -30,7 +30,7 @@ struct ContentView: View {
                     Label ("Clear", systemImage: "trash.slash")
                 }
                 .accessibilityHint("Clears all messages in the conversation and starts fresh")
-
+                
                 Menu(content: {
                     Picker("Pick a language", selection: $viewModel.selectedLanguage) {
                         ForEach(LanguageType.allCases, id: \.self) { item in
@@ -46,30 +46,34 @@ struct ContentView: View {
             .onAppear {
                 hapticImpact.prepare()
             }
-
+        
     }
-
+    
     var chatListView: some View {
         ScrollViewReader { proxy in
             VStack(spacing: 0) {
                 ScrollView {
-                    LazyVStack(spacing: 0) {
-                        ForEach(viewModel.messages) { message in
-                            MessageRowView(message: message, isLightMode: colorScheme == .light) { retryMessage in
-                                Task {
-                                    await viewModel.retry(message: retryMessage)
+                    if viewModel.messages.isEmpty {
+                        suggestedQuestionsView(proxy: proxy)
+                    } else {
+                        LazyVStack(spacing: 0) {
+                            ForEach(viewModel.messages) { message in
+                                MessageRowView(message: message, isLightMode: colorScheme == .light) { retryMessage in
+                                    Task {
+                                        await viewModel.retry(message: retryMessage)
+                                    }
                                 }
+                                .equatable()
                             }
-                            .equatable()
+                        }
+                        .onTapGesture {
+                            isTextFieldFocused = false
                         }
                     }
-                    .onTapGesture {
-                        isTextFieldFocused = false
-                    }
                 }
-
+                
                 Divider()
-
+                
                 bottomView(image: MessageRow.userImage, proxy: proxy)
             }// VSTACK
             .onChange(of: viewModel.messages.count) { _, _ in
@@ -79,7 +83,7 @@ struct ContentView: View {
             }
             .onChange(of: viewModel.messages.last?.responseText) { _, newText in
                 guard viewModel.isInteractingWithChatGPT, !isVoiceOverRunning else { return }
-
+                
                 let currentCharacterCount = newText?.count ?? 0
                 let shouldAutoScroll = currentCharacterCount - lastAutoScrollCharacterCount >= 80
                 if shouldAutoScroll {
@@ -95,24 +99,85 @@ struct ContentView: View {
         }// ScrollViewReader
         .background(contentBackgroundColor)
     }
-
+    
+    private func suggestedQuestionsView(proxy: ScrollViewProxy) -> some View {
+        VStack(spacing: 24) {
+            Spacer()
+                .frame(height: 40)
+            
+            Image(MessageRow.assistantImage)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 64, height: 64)
+                .clipShape(Circle())
+                .accessibilityHidden(true)
+            
+            Text("Ask Krishna anything")
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(colorScheme == .light ? .black.opacity(0.8) : .white.opacity(0.9))
+            
+            Text("Choose a question below or type your own")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            
+            VStack(spacing: 10) {
+                ForEach(viewModel.suggestedQuestions, id: \.self) { question in
+                    Button {
+                        viewModel.inputMessage = question
+                        isTextFieldFocused = false
+                        scrollToBottom(proxy: proxy)
+                        Task {
+                            await viewModel.sendTapped()
+                        }
+                        hapticImpact.impactOccurred()
+                    } label: {
+                        questionLabel(question)
+                    }
+                    .accessibilityLabel("Suggested question")
+                    .accessibilityValue(question)
+                }
+            }
+            .padding(.horizontal, 20)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.bottom, 20)
+    }
+    
+    private func questionLabel(_ text: String) -> some View {
+        let isLight = colorScheme == .light
+        return Text(text)
+            .font(.subheadline)
+            .foregroundStyle(isLight ? Color.primary : Color.white.opacity(0.9))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(isLight ? Color(.systemGray6) : Color.white.opacity(0.08))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(isLight ? Color.black.opacity(0.06) : Color.white.opacity(0.1), lineWidth: 1)
+            )
+    }
+    
     func bottomView(image: String, proxy: ScrollViewProxy) -> some View {
         HStack(alignment: .center, spacing: 8) {
-
+            
             MessageRowImageView(image: image, isDecorative: true)
-
+            
             HStack {
                 TextField("Ask Shri Krishna", text: $viewModel.inputMessage, axis: .vertical)
                     .textFieldStyle(.roundedBorder)
                     .focused($isTextFieldFocused)
                     .accessibilityLabel("Message input")
                     .accessibilityHint("Enter your question or message to ask Krishna")
-
+                
                 ScanButton(text: $viewModel.inputMessage)
                     .frame(width: 56, height: 56, alignment: .leading)
             }
             .disabled(viewModel.isInteractingWithChatGPT)
-
+            
             if viewModel.isInteractingWithChatGPT {
                 DotsLoadingView()
                     .frame(width: 60, height: 30)
@@ -137,14 +202,14 @@ struct ContentView: View {
         }
         .padding(.horizontal, 16)
     }
-
+    
     private func scrollToBottom(proxy: ScrollViewProxy) {
         scrollToBottom(proxy: proxy, animated: false)
     }
-
+    
     private func scrollToBottom(proxy: ScrollViewProxy, animated: Bool) {
         guard let lastMessageID = viewModel.messages.last?.id else { return }
-
+        
         if animated {
             withAnimation {
                 proxy.scrollTo(lastMessageID, anchor: .bottom)
@@ -153,11 +218,11 @@ struct ContentView: View {
             proxy.scrollTo(lastMessageID, anchor: .bottom)
         }
     }
-
+    
     private var contentBackgroundColor: Color {
         colorScheme == .light ? .white : Color(red: 52/255, green: 53/255, blue: 65/255, opacity: 0.5)
     }
-
+    
     private var isVoiceOverRunning: Bool {
         UIAccessibility.isVoiceOverRunning
     }
