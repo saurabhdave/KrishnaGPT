@@ -41,6 +41,8 @@ struct ContentView: View {
                      label: { Label ("Language", systemImage: "character.bubble") })
                 .accessibilityLabel("Change conversation language")
                 .accessibilityHint("Currently set to \(viewModel.selectedLanguage.rawValue.capitalized)")
+                
+                ScanButton(text: $viewModel.inputMessage)
             }
             .disabled(viewModel.isInteractingWithChatGPT)
             .onAppear {
@@ -166,17 +168,12 @@ struct ContentView: View {
             
             MessageRowImageView(image: image, isDecorative: true)
             
-            HStack {
-                TextField("Ask Shri Krishna", text: $viewModel.inputMessage, axis: .vertical)
-                    .textFieldStyle(.roundedBorder)
-                    .focused($isTextFieldFocused)
-                    .accessibilityLabel("Message input")
-                    .accessibilityHint("Enter your question or message to ask Krishna")
-                
-                ScanButton(text: $viewModel.inputMessage)
-                    .frame(width: 56, height: 56, alignment: .leading)
-            }
-            .disabled(viewModel.isInteractingWithChatGPT)
+            TextField("Ask Shri Krishna", text: $viewModel.inputMessage, axis: .vertical)
+                .textFieldStyle(.roundedBorder)
+                .focused($isTextFieldFocused)
+                .accessibilityLabel("Message input")
+                .accessibilityHint("Enter your question or message to ask Krishna")
+                .disabled(viewModel.isInteractingWithChatGPT)
             
             if viewModel.isInteractingWithChatGPT {
                 DotsLoadingView()

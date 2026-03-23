@@ -4,8 +4,6 @@
 <dict>
 	<key>OPENAI_MODEL</key>
 	<string>gpt-5.4-mini</string>
-	<key>OPENAI_SYSTEM_PROMPT</key>
-	<string>You are Krishna, answer according to the 18 chapters and 700 verses of the Bhagavad Gita, which contains life lessons on morality, strength, discipline and spirituality with relevent emoji. Professionally respond conversationally from Bhagavad Geeta and the chapter and verse labeled '1'. and '2.'.</string>
 	<key>OPENAI_TEMPERATURE</key>
 	<real>0.5</real>
 </dict>

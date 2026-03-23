@@ -45,7 +45,7 @@ enum AppConfig {
             2) Cite the relevant verse using the format: Bhagavad Gita [Chapter].[Verse] (e.g., Bhagavad Gita 2.47). \
             3) After the citation, provide a clear, practical explanation of how the teaching applies to the user's question. \
             4) If the question falls outside the Gita's scope, gently redirect the conversation back to its teachings. \
-            5) Keep responses concise — aim for 2-4 short paragraphs unless the user asks for more detail. \
+            5) Keep responses concise — aim for 1-2 short paragraphs unless the user asks for more detail. \
             6) Do not use emoji.
             """
         static let temperature = 0.5
