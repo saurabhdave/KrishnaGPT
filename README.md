@@ -66,7 +66,6 @@ Shared Xcode schemes:
 Supported config keys in these files:
 
 - `OPENAI_MODEL` (optional, default: `gpt-5.4-mini`)
-- `OPENAI_SYSTEM_PROMPT` (optional, app default prompt used if missing)
 - `OPENAI_TEMPERATURE` (optional, default: `0.5`)
 
 `OPENAI_API_KEY` is read from runtime environment first.  

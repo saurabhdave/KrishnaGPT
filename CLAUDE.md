@@ -52,5 +52,5 @@ Environment selection: runtime `APP_ENVIRONMENT` var > Info.plist `APP_ENVIRONME
 
 - All ViewModel methods that touch `@Published` state are `@MainActor`. The ViewModel is `ObservableObject` with `@StateObject` ownership in `KrishnaGPTApp`.
 - `ContentView` suppresses auto-scrolling when VoiceOver is running (`UIAccessibility.isVoiceOverRunning`).
-- `ScanButton` uses `UIViewRepresentable` wrapping `UIAction.captureTextFromCamera` for live-text camera input.
+- `ScanButton` is a SwiftUI `View` in the navigation toolbar. It wraps a private `UIViewRepresentable` (`CameraKeyInputButton`) that bridges `UIAction.captureTextFromCamera` for live-text camera input.
 - Tests use Swift Testing (`@Test`, `#expect`). The test suite is a `@MainActor struct` annotated with `@Suite`. `MockChatService` queues `Result<[String], Error>` values in `streamedResponses` and pops them FIFO on each `sendMessageStream` call.
