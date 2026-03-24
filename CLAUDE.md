@@ -63,7 +63,3 @@ Xcconfig file structure (`Configuration/` directory):
 - `ContentView` suppresses auto-scrolling when VoiceOver is running (`UIAccessibility.isVoiceOverRunning`).
 - `ScanButton` is a SwiftUI `View` in the navigation toolbar. It wraps a private `UIViewRepresentable` (`CameraKeyInputButton`) that bridges `UIAction.captureTextFromCamera` for live-text camera input.
 - Tests use Swift Testing (`@Test`, `#expect`). The test suite is a `@MainActor struct` annotated with `@Suite`. `MockChatService` queues `Result<[String], Error>` values in `streamedResponses` and pops them FIFO on each `sendMessageStream` call.
-
-## Git Commit Rules
-
-- **Never add `Co-Authored-By: Claude <noreply@anthropic.com>` (or any Claude co-author trailer) to commits in this repository.** Omit the trailer entirely when creating commits.
