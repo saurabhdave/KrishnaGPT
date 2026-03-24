@@ -12,5 +12,6 @@ build/
 # Secrets (API keys)
 Configuration/Secrets.xcconfig
 
-# Local Claude instructions
+# Claude instructions
+CLAUDE.md
 CLAUDE.local.md
