@@ -14,8 +14,8 @@ struct ScanButton: View {
     var body: some View {
         CameraKeyInputButton(text: $text)
             .frame(width: 30, height: 30)
-            .accessibilityLabel("Scan text from camera")
-            .accessibilityHint("Opens the camera to scan text and insert it into the message")
+            .accessibilityLabel(Strings.Actions.scanText)
+            .accessibilityHint(Strings.Accessibility.scanTextHint)
     }
 }
 

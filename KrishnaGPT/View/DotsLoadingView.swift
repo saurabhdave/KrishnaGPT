@@ -33,8 +33,8 @@ struct DotsLoadingView: View {
                     .accessibilityHidden(true)
             }
         }
-        .accessibilityLabel("Loading")
-        .accessibilityValue("Please wait")
+        .accessibilityLabel(Strings.Accessibility.loading)
+        .accessibilityValue(Strings.Accessibility.pleaseWait)
         .onAppear {
             guard !reduceMotion else { return }
             if !animateDots {

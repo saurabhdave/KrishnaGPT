@@ -15,6 +15,7 @@
 		A33EF7952992D651009189B9 /* ChatGPTAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33EF7942992D651009189B9 /* ChatGPTAPI.swift */; };
 		A350AC1729940EE9003632B3 /* LanguageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A350AC1629940EE9003632B3 /* LanguageType.swift */; };
 		A3A4EAB62993645D00B1F473 /* ScanButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A4EAB52993645D00B1F473 /* ScanButton.swift */; };
+		A3D36DAF2F733C4E005BB6FD /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D36DAE2F733C4E005BB6FD /* Strings.swift */; };
 		A3EEC3F829932E5B00B376B8 /* MessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EEC3F729932E5B00B376B8 /* MessageRow.swift */; };
 		A3EEC3FA2993349100B376B8 /* DotsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EEC3F92993349100B376B8 /* DotsLoadingView.swift */; };
 		A3EEC3FC299337A700B376B8 /* MessageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EEC3FB299337A700B376B8 /* MessageRowView.swift */; };
@@ -45,6 +46,7 @@
 		A33EF7942992D651009189B9 /* ChatGPTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTAPI.swift; sourceTree = "<group>"; };
 		A350AC1629940EE9003632B3 /* LanguageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageType.swift; sourceTree = "<group>"; };
 		A3A4EAB52993645D00B1F473 /* ScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanButton.swift; sourceTree = "<group>"; };
+		A3D36DAE2F733C4E005BB6FD /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		A3DBBE062F722579007C293A /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
 		A3DBBE072F72257A007C293A /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		A3DBBE082F72257B007C293A /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				A33EF78F2992CD3A009189B9 /* ViewModel */,
 				A329938D299169A60016F387 /* Assets.xcassets */,
 				A329938F299169A60016F387 /* Preview Content */,
+				A3D36DAD2F733C3C005BB6FD /* Constants */,
 			);
 			path = KrishnaGPT;
 			sourceTree = "<group>";
@@ -172,6 +175,14 @@
 				A4F1C0052D71E0C70018C001 /* AppConfig.swift */,
 			);
 			path = AppConfig;
+			sourceTree = "<group>";
+		};
+		A3D36DAD2F733C3C005BB6FD /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				A3D36DAE2F733C4E005BB6FD /* Strings.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		A3DBBE052F722551007C293A /* Configuration */ = {
@@ -313,6 +324,7 @@
 				A3EEC3FA2993349100B376B8 /* DotsLoadingView.swift in Sources */,
 				A329938A299169A40016F387 /* KrishnaGPTApp.swift in Sources */,
 				A3EEC3FC299337A700B376B8 /* MessageRowView.swift in Sources */,
+				A3D36DAF2F733C4E005BB6FD /* Strings.swift in Sources */,
 				A350AC1729940EE9003632B3 /* LanguageType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

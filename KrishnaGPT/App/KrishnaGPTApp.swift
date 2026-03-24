@@ -15,11 +15,7 @@ struct KrishnaGPTApp: App {
 #if DEBUG
         let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
         if AppConfig.apiKey.isEmpty && !isRunningTests {
-            assertionFailure("""
-            OPENAI_API_KEY is empty.
-            Create Configuration/Secrets.xcconfig from Configuration/Secrets.xcconfig.template
-            and set your OPENAI_API_KEY value.
-            """)
+            assertionFailure(Strings.Errors.apiKeyMissing)
         }
 #endif
 

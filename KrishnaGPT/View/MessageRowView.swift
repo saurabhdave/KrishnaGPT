@@ -57,12 +57,12 @@ struct MessageRowView: View, Equatable {
                         .lineSpacing(3)
                         .multilineTextAlignment(.leading)
                         .textSelection(.enabled)
-                        .accessibilityLabel(isUser ? "Your message" : "Krishna response")
+                        .accessibilityLabel(isUser ? Strings.Accessibility.userMessage : Strings.Accessibility.krishnaResponse)
                         .accessibilityValue(text)
                 }
                 
                 if let error = responseError {
-                    Text("Error: \(error)")
+                    Text(Strings.Errors.responseError(error))
                         .font(.footnote)
                         .foregroundStyle(.red)
                         .multilineTextAlignment(.leading)
@@ -73,13 +73,13 @@ struct MessageRowView: View, Equatable {
                                 .fill(Color.red.opacity(isLightMode ? 0.14 : 0.2))
                         )
                     
-                    Button("Regenerate response") {
+                    Button(Strings.Actions.regenerateResponse) {
                         retryCallback(message)
                     }
                     .buttonStyle(.borderedProminent)
                     .controlSize(.small)
-                    .accessibilityLabel("Regenerate response")
-                    .accessibilityHint("Retries generating the response for this message due to an error")
+                    .accessibilityLabel(Strings.Actions.regenerateResponse)
+                    .accessibilityHint(Strings.Accessibility.regenerateHint)
                     .accessibilityAddTraits(.isButton)
                 }
                 

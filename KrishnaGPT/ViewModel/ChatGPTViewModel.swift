@@ -19,12 +19,7 @@ final class ChatGPTViewModel: ObservableObject {
         inputMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
-    let suggestedQuestions = [
-        "What is the meaning of dharma?",
-        "How do I overcome fear and anxiety?",
-        "What does the Gita say about karma?",
-        "How to find inner peace?"
-    ]
+    let suggestedQuestions = Strings.SuggestedQuestions.all
     
     private let chatService: ChatNetworking
     
