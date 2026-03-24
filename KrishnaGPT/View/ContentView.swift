@@ -20,6 +20,8 @@ struct ContentView: View {
         chatListView
             .navigationTitle("Bhagavad Gita AI")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackgroundVisibility(.automatic, for: .navigationBar)
+            .toolbarBackground(.ultraThinMaterial, for: .navigationBar)
             .toolbar {
                 
                 Button {
@@ -53,29 +55,28 @@ struct ContentView: View {
     
     var chatListView: some View {
         ScrollViewReader { proxy in
-            VStack(spacing: 0) {
-                ScrollView {
-                    if viewModel.messages.isEmpty {
-                        suggestedQuestionsView(proxy: proxy)
-                    } else {
-                        LazyVStack(spacing: 0) {
-                            ForEach(viewModel.messages) { message in
-                                MessageRowView(message: message, isLightMode: colorScheme == .light) { retryMessage in
-                                    Task {
-                                        await viewModel.retry(message: retryMessage)
-                                    }
+            ScrollView {
+                if viewModel.messages.isEmpty {
+                    suggestedQuestionsView(proxy: proxy)
+                } else {
+                    LazyVStack(spacing: 0) {
+                        ForEach(viewModel.messages) { message in
+                            MessageRowView(message: message, isLightMode: colorScheme == .light) { retryMessage in
+                                Task {
+                                    await viewModel.retry(message: retryMessage)
                                 }
-                                .equatable()
                             }
-                        }
-                        .onTapGesture {
-                            isTextFieldFocused = false
+                            .equatable()
                         }
                     }
+                    .onTapGesture {
+                        isTextFieldFocused = false
+                    }
                 }
-                
+            }
+            .safeAreaInset(edge: .bottom, spacing: 0) {
                 bottomView(image: MessageRow.userImage, proxy: proxy)
-            }// VSTACK
+            }
             .onChange(of: viewModel.messages.count) { _, _ in
                 lastAutoScrollCharacterCount = 0
                 guard !isVoiceOverRunning else { return }
@@ -216,11 +217,12 @@ struct ContentView: View {
             }
         }
         .padding(.horizontal, 12)
-        .padding(.vertical, 8)
-        .background(
-            contentBackgroundColor
-                .shadow(color: Color.black.opacity(colorScheme == .light ? 0.06 : 0.3), radius: 8, x: 0, y: -4)
-        )
+        .padding(.top, 8)
+        .padding(.bottom, 4)
+        .background(.ultraThinMaterial)
+        .overlay(alignment: .top) {
+            Divider()
+        }
     }
     
     private func scrollToBottom(proxy: ScrollViewProxy) {
