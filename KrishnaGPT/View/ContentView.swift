@@ -74,8 +74,6 @@ struct ContentView: View {
                     }
                 }
                 
-                Divider()
-                
                 bottomView(image: MessageRow.userImage, proxy: proxy)
             }// VSTACK
             .onChange(of: viewModel.messages.count) { _, _ in
@@ -164,20 +162,34 @@ struct ContentView: View {
     }
     
     func bottomView(image: String, proxy: ScrollViewProxy) -> some View {
-        HStack(alignment: .center, spacing: 8) {
-            
-            MessageRowImageView(image: image, isDecorative: true)
-            
-            TextField("Ask Shri Krishna", text: $viewModel.inputMessage, axis: .vertical)
-                .textFieldStyle(.roundedBorder)
-                .focused($isTextFieldFocused)
-                .accessibilityLabel("Message input")
-                .accessibilityHint("Enter your question or message to ask Krishna")
-                .disabled(viewModel.isInteractingWithChatGPT)
-            
+        HStack(alignment: .bottom, spacing: 10) {
+            HStack(alignment: .bottom, spacing: 0) {
+                TextField("Ask Shri Krishna...", text: $viewModel.inputMessage, axis: .vertical)
+                    .lineLimit(1...5)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .focused($isTextFieldFocused)
+                    .accessibilityLabel("Message input")
+                    .accessibilityHint("Enter your question or message to ask Krishna")
+                    .disabled(viewModel.isInteractingWithChatGPT)
+            }
+            .background(
+                RoundedRectangle(cornerRadius: 24, style: .continuous)
+                    .fill(colorScheme == .light ? Color(.systemGray6) : Color.white.opacity(0.08))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 24, style: .continuous)
+                    .stroke(
+                        isTextFieldFocused
+                            ? Color.accentColor.opacity(0.5)
+                            : (colorScheme == .light ? Color.black.opacity(0.08) : Color.white.opacity(0.12)),
+                        lineWidth: 1
+                    )
+            )
+
             if viewModel.isInteractingWithChatGPT {
                 DotsLoadingView()
-                    .frame(width: 60, height: 30)
+                    .frame(width: 40, height: 40)
             } else {
                 Button {
                     isTextFieldFocused = false
@@ -187,17 +199,28 @@ struct ContentView: View {
                     }
                     hapticImpact.impactOccurred()
                 } label: {
-                    Image(systemName: "paperplane.circle.fill")
-                        .rotationEffect(.degrees(45))
-                        .font(.title2)
+                    Image(systemName: "arrow.up.circle.fill")
+                        .font(.system(size: 34))
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(
+                            .white,
+                            viewModel.isSendDisabled
+                                ? (colorScheme == .light ? Color(.systemGray4) : Color.white.opacity(0.15))
+                                : Color.accentColor
+                        )
                 }
                 .accessibilityLabel("Send message")
                 .accessibilityHint("Sends your message to Krishna for a response")
                 .disabled(viewModel.isSendDisabled)
-                .frame(minWidth: 44, minHeight: 44)
+                .frame(width: 40, height: 40)
             }
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(
+            contentBackgroundColor
+                .shadow(color: Color.black.opacity(colorScheme == .light ? 0.06 : 0.3), radius: 8, x: 0, y: -4)
+        )
     }
     
     private func scrollToBottom(proxy: ScrollViewProxy) {
