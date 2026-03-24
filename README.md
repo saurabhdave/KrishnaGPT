@@ -7,11 +7,16 @@ English, Hindi, French, German, Mandarin, and Spanish.
 ### App video
 https://www.youtube.com/shorts/3f2n_mS1DTs
 
-<img src="https://user-images.githubusercontent.com/7702191/217727798-66866075-82ab-40bb-bc20-0861d69b4724.jpg" width="15%"></img>
-<img src="https://user-images.githubusercontent.com/7702191/217727725-7cc3a52a-1554-4d5d-9477-6f9194559fdd.jpg" width="15%"></img>
-<img src="https://user-images.githubusercontent.com/7702191/217727743-badb8f8b-a34d-4671-8d28-d45b57d7b940.jpg" width="15%"></img>
-<img src="https://user-images.githubusercontent.com/7702191/217727778-1255cab8-3e07-4424-9906-3d81df556346.jpg" width="15%"></img>
-<img src="https://user-images.githubusercontent.com/7702191/217727789-04ae3de6-1f7a-401b-8276-11510b3ff8dd.jpg" width="15%"></img>
+<img src="https://github.com/user-attachments/assets/54667ce0-c639-4177-a89d-07a2b0d51194" width="15%"/>
+
+<img src="https://github.com/user-attachments/assets/08f29c05-3e18-45a9-a84a-69f79692b514" width="15%"/>
+
+<img src="https://github.com/user-attachments/assets/5b3083f7-1b41-4aff-ba56-63324699c480" width="15%"/>
+
+
+<img src="https://github.com/user-attachments/assets/be18d556-c8bc-4523-af72-a38ba10a1206" width="15%"/>
+
+<img src="https://github.com/user-attachments/assets/ef749f55-e81c-4b96-82b0-6b0ff612da98" width="15%"/>
 
 ## Tech stack
 
