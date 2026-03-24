@@ -1,0 +1,12 @@
+// Staging.xcconfig — Staging environment.
+// Not currently wired to a build configuration. The KrishnaGPT-Staging scheme
+// uses Debug config and overrides APP_ENVIRONMENT=staging via runtime env var.
+
+#include "Secrets.xcconfig"
+#include "Base.xcconfig"
+
+APP_ENVIRONMENT = staging
+OPENAI_MODEL = gpt-5.4-mini
+OPENAI_TEMPERATURE = 0.5
+
+

@@ -34,42 +34,56 @@ https://www.youtube.com/shorts/3f2n_mS1DTs
 ## Setup
 
 1. Open `KrishnaGPT.xcodeproj` in Xcode.
-2. Select a shared scheme:
-   - `KrishnaGPT-Dev` (`APP_ENVIRONMENT=dev`)
-   - `KrishnaGPT-Staging` (`APP_ENVIRONMENT=staging`)
-   - `KrishnaGPT-Prod` (`APP_ENVIRONMENT=prod`)
-3. Set `OPENAI_API_KEY` in **Scheme > Edit Scheme > Run > Environment Variables** for the selected scheme.
+2. Copy `Configuration/Secrets.xcconfig.template` to `Configuration/Secrets.xcconfig` and set your OpenAI API key:
+   ```
+   OPENAI_API_KEY = sk-proj-your-key-here
+   ```
+   `Secrets.xcconfig` is gitignored and will never be committed.
+3. Select a shared scheme:
+   - `KrishnaGPT-Dev` (Debug, `APP_ENVIRONMENT=dev`)
+   - `KrishnaGPT-Staging` (Debug + runtime override, `APP_ENVIRONMENT=staging`)
+   - `KrishnaGPT-Prod` (Release, `APP_ENVIRONMENT=prod`)
 4. Build and run.
 
 ## Configuration
 
-Configuration is read by [`KrishnaGPT/AppConfig/AppConfig.swift`](KrishnaGPT/AppConfig/AppConfig.swift).
+Configuration is managed through `.xcconfig` files in the [`Configuration/`](Configuration/) directory and read at runtime by [`AppConfig.swift`](KrishnaGPT/AppConfig/AppConfig.swift).
 
-Environment selection precedence:
+### Config value flow
 
-1. Runtime env var `APP_ENVIRONMENT` (scheme/CI)
-2. Build setting injected into Info.plist (`APP_ENVIRONMENT`)
-3. Fallback: `dev` for Debug builds, `prod` for Release builds
+```
+Secrets.xcconfig → Dev/Prod.xcconfig → Xcode build settings → $(VARIABLE) in Info.plist → AppConfig.swift
+```
 
-Environment files:
+### Xcconfig files
 
-- [`KrishnaGPT/AppConfig/Config.dev.plist`](KrishnaGPT/AppConfig/Config.dev.plist)
-- [`KrishnaGPT/AppConfig/Config.staging.plist`](KrishnaGPT/AppConfig/Config.staging.plist)
-- [`KrishnaGPT/AppConfig/Config.prod.plist`](KrishnaGPT/AppConfig/Config.prod.plist)
+| File | Purpose |
+|------|---------|
+| [`Base.xcconfig`](Configuration/Base.xcconfig) | Shared target build settings (bundle ID, deployment target, `INFOPLIST_FILE`, etc.) |
+| [`Dev.xcconfig`](Configuration/Dev.xcconfig) | Wired to Debug config (`APP_ENVIRONMENT=dev`, model, temperature) |
+| [`Staging.xcconfig`](Configuration/Staging.xcconfig) | Not wired; Staging scheme overrides via runtime env var |
+| [`Prod.xcconfig`](Configuration/Prod.xcconfig) | Wired to Release config (`APP_ENVIRONMENT=prod`, model, temperature) |
+| `Secrets.xcconfig` | Gitignored; holds `OPENAI_API_KEY`; `#include`d by Dev/Staging/Prod |
+| [`Secrets.xcconfig.template`](Configuration/Secrets.xcconfig.template) | Checked in; copy to create `Secrets.xcconfig` |
 
-Shared Xcode schemes:
+### Resolution precedence
 
-- [`KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Dev.xcscheme`](KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Dev.xcscheme)
-- [`KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Staging.xcscheme`](KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Staging.xcscheme)
-- [`KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Prod.xcscheme`](KrishnaGPT.xcodeproj/xcshareddata/xcschemes/KrishnaGPT-Prod.xcscheme)
+`AppConfig` resolves each value in this order:
 
-Supported config keys in these files:
+1. **Runtime env var** (`ProcessInfo`) — for API key and `APP_ENVIRONMENT` (useful for CI/scheme overrides)
+2. **Info.plist** — custom keys injected via `$(VARIABLE)` substitution from xcconfig build settings
+3. **Hardcoded defaults** — `gpt-5.4-mini`, temperature `0.5`, empty API key
 
-- `OPENAI_MODEL` (optional, default: `gpt-5.4-mini`)
-- `OPENAI_TEMPERATURE` (optional, default: `0.5`)
+Environment selection: runtime `APP_ENVIRONMENT` > Info.plist `APP_ENVIRONMENT` > compile-time fallback (Debug=dev, Release=prod).
 
-`OPENAI_API_KEY` is read from runtime environment first.  
-Best practice: do not commit or bundle production API secrets in app resources.
+### Config keys
+
+| Key | Default | Source |
+|-----|---------|--------|
+| `OPENAI_API_KEY` | (empty) | `Secrets.xcconfig` |
+| `OPENAI_MODEL` | `gpt-5.4-mini` | `Dev.xcconfig` / `Prod.xcconfig` |
+| `OPENAI_TEMPERATURE` | `0.5` | `Dev.xcconfig` / `Prod.xcconfig` |
+| `APP_ENVIRONMENT` | `dev` or `prod` | `Dev.xcconfig` / `Prod.xcconfig` |
 
 ## Architecture
 

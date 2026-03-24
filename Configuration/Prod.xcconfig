@@ -1,0 +1,10 @@
+// Prod.xcconfig — Release / prod environment.
+
+#include "Secrets.xcconfig"
+#include "Base.xcconfig"
+
+APP_ENVIRONMENT = prod
+OPENAI_MODEL = gpt-5.4-mini
+OPENAI_TEMPERATURE = 0.5
+
+

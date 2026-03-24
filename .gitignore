@@ -8,3 +8,6 @@
 .build/
 DerivedData/
 build/
+
+# Secrets (API keys)
+Configuration/Secrets.xcconfig

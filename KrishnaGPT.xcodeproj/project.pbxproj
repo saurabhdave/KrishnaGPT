@@ -19,13 +19,8 @@
 		A3EEC3FA2993349100B376B8 /* DotsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EEC3F92993349100B376B8 /* DotsLoadingView.swift */; };
 		A3EEC3FC299337A700B376B8 /* MessageRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EEC3FB299337A700B376B8 /* MessageRowView.swift */; };
 		A3EEC3FE2993531600B376B8 /* MessageRowImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EEC3FD2993531600B376B8 /* MessageRowImageView.swift */; };
-		A4F1C0012D71E0C70018C001 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4F1C0042D71E0C70018C001 /* Config.plist */; };
 		A4F1C0022D71E0C70018C001 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F1C0052D71E0C70018C001 /* AppConfig.swift */; };
 		A4F1C0032D71E0C70018C001 /* SDOpenAIClient in Frameworks */ = {isa = PBXBuildFile; productRef = A4F1C0062D71E0C70018C001 /* SDOpenAIClient */; };
-		A4F1C0082D71E0C70018C001 /* AppConfig+ValueParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F1C0092D71E0C70018C001 /* AppConfig+ValueParsing.swift */; };
-		A4F1C00A2D71E0C70018C001 /* Config.dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4F1C00B2D71E0C70018C001 /* Config.dev.plist */; };
-		A4F1C00C2D71E0C70018C001 /* Config.staging.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4F1C00D2D71E0C70018C001 /* Config.staging.plist */; };
-		A4F1C00E2D71E0C70018C001 /* Config.prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = A4F1C00F2D71E0C70018C001 /* Config.prod.plist */; };
 		B10000000000000000000001 /* MockChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000012 /* MockChatService.swift */; };
 		B10000000000000000000002 /* ChatGPTViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000000000000000000013 /* ChatGPTViewModelTests.swift */; };
 /* End PBXBuildFile section */
@@ -50,16 +45,16 @@
 		A33EF7942992D651009189B9 /* ChatGPTAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTAPI.swift; sourceTree = "<group>"; };
 		A350AC1629940EE9003632B3 /* LanguageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageType.swift; sourceTree = "<group>"; };
 		A3A4EAB52993645D00B1F473 /* ScanButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanButton.swift; sourceTree = "<group>"; };
+		A3DBBE062F722579007C293A /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		A3DBBE072F72257A007C293A /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
+		A3DBBE082F72257B007C293A /* Staging.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
+		A3DBBE092F72257C007C293A /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
+		A3DBBE0A2F72257D007C293A /* Secrets.xcconfig.template */ = {isa = PBXFileReference; lastKnownFileType = text; path = Secrets.xcconfig.template; sourceTree = "<group>"; };
 		A3EEC3F729932E5B00B376B8 /* MessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRow.swift; sourceTree = "<group>"; };
 		A3EEC3F92993349100B376B8 /* DotsLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsLoadingView.swift; sourceTree = "<group>"; };
 		A3EEC3FB299337A700B376B8 /* MessageRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRowView.swift; sourceTree = "<group>"; };
 		A3EEC3FD2993531600B376B8 /* MessageRowImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRowImageView.swift; sourceTree = "<group>"; };
-		A4F1C0042D71E0C70018C001 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		A4F1C0052D71E0C70018C001 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
-		A4F1C0092D71E0C70018C001 /* AppConfig+ValueParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppConfig+ValueParsing.swift"; sourceTree = "<group>"; };
-		A4F1C00B2D71E0C70018C001 /* Config.dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.dev.plist; sourceTree = "<group>"; };
-		A4F1C00D2D71E0C70018C001 /* Config.staging.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.staging.plist; sourceTree = "<group>"; };
-		A4F1C00F2D71E0C70018C001 /* Config.prod.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.prod.plist; sourceTree = "<group>"; };
 		B10000000000000000000011 /* KrishnaGPTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KrishnaGPTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B10000000000000000000012 /* MockChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatService.swift; sourceTree = "<group>"; };
 		B10000000000000000000013 /* ChatGPTViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTViewModelTests.swift; sourceTree = "<group>"; };
@@ -90,6 +85,7 @@
 				A3299388299169A40016F387 /* KrishnaGPT */,
 				B10000000000000000000051 /* KrishnaGPTTests */,
 				A3299387299169A40016F387 /* Products */,
+				A3DBBE052F722551007C293A /* Configuration */,
 			);
 			sourceTree = "<group>";
 		};
@@ -174,13 +170,20 @@
 			isa = PBXGroup;
 			children = (
 				A4F1C0052D71E0C70018C001 /* AppConfig.swift */,
-				A4F1C0092D71E0C70018C001 /* AppConfig+ValueParsing.swift */,
-				A4F1C0042D71E0C70018C001 /* Config.plist */,
-				A4F1C00B2D71E0C70018C001 /* Config.dev.plist */,
-				A4F1C00D2D71E0C70018C001 /* Config.staging.plist */,
-				A4F1C00F2D71E0C70018C001 /* Config.prod.plist */,
 			);
 			path = AppConfig;
+			sourceTree = "<group>";
+		};
+		A3DBBE052F722551007C293A /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				A3DBBE062F722579007C293A /* Base.xcconfig */,
+				A3DBBE072F72257A007C293A /* Dev.xcconfig */,
+				A3DBBE082F72257B007C293A /* Staging.xcconfig */,
+				A3DBBE092F72257C007C293A /* Prod.xcconfig */,
+				A3DBBE0A2F72257D007C293A /* Secrets.xcconfig.template */,
+			);
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 		B10000000000000000000051 /* KrishnaGPTTests */ = {
@@ -281,10 +284,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4F1C00E2D71E0C70018C001 /* Config.prod.plist in Resources */,
-				A4F1C00C2D71E0C70018C001 /* Config.staging.plist in Resources */,
-				A4F1C00A2D71E0C70018C001 /* Config.dev.plist in Resources */,
-				A4F1C0012D71E0C70018C001 /* Config.plist in Resources */,
 				A3299391299169A60016F387 /* Preview Assets.xcassets in Resources */,
 				A329938E299169A60016F387 /* Assets.xcassets in Resources */,
 			);
@@ -304,7 +303,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A4F1C0082D71E0C70018C001 /* AppConfig+ValueParsing.swift in Sources */,
 				A4F1C0022D71E0C70018C001 /* AppConfig.swift in Sources */,
 				A3A4EAB62993645D00B1F473 /* ScanButton.swift in Sources */,
 				A33EF7952992D651009189B9 /* ChatGPTAPI.swift in Sources */,
@@ -455,67 +453,15 @@
 		};
 		A3299395299169A60016F387 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3DBBE072F72257A007C293A /* Dev.xcconfig */;
 			buildSettings = {
-				APP_ENVIRONMENT = dev;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"KrishnaGPT/Preview Content\"";
-				DEVELOPMENT_TEAM = LJ4XCD8HD3;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_APP_ENVIRONMENT = "$(APP_ENVIRONMENT)";
-				INFOPLIST_KEY_CFBundleDisplayName = KrishnaGPT;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dave.saurabh.KrishnaGPT;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		A3299396299169A60016F387 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3DBBE092F72257C007C293A /* Prod.xcconfig */;
 			buildSettings = {
-				APP_ENVIRONMENT = prod;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"KrishnaGPT/Preview Content\"";
-				DEVELOPMENT_TEAM = LJ4XCD8HD3;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_APP_ENVIRONMENT = "$(APP_ENVIRONMENT)";
-				INFOPLIST_KEY_CFBundleDisplayName = KrishnaGPT;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dave.saurabh.KrishnaGPT;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

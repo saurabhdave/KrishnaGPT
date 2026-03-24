@@ -17,7 +17,8 @@ struct KrishnaGPTApp: App {
         if AppConfig.apiKey.isEmpty && !isRunningTests {
             assertionFailure("""
             OPENAI_API_KEY is empty.
-            Set OPENAI_API_KEY in Scheme > Run > Environment Variables for local development.
+            Create Configuration/Secrets.xcconfig from Configuration/Secrets.xcconfig.template
+            and set your OPENAI_API_KEY value.
             """)
         }
 #endif

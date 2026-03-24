@@ -1,0 +1,10 @@
+// Dev.xcconfig — Debug / dev environment.
+
+#include "Secrets.xcconfig"
+#include "Base.xcconfig"
+
+APP_ENVIRONMENT = dev
+OPENAI_MODEL = gpt-5.4-mini
+OPENAI_TEMPERATURE = 0.5
+
+

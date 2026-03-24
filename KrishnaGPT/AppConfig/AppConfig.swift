@@ -30,7 +30,6 @@ enum AppConfig {
     private enum Key: String {
         case apiKey = "OPENAI_API_KEY"
         case model = "OPENAI_MODEL"
-        case systemPrompt = "OPENAI_SYSTEM_PROMPT"
         case temperature = "OPENAI_TEMPERATURE"
     }
 
@@ -57,37 +56,25 @@ enum AppConfig {
     // 3) Compile-time fallback: Debug -> dev, Release -> prod
     static let environment: AppEnvironment = resolveEnvironment()
 
-    private static let values: [String: Any] = {
-        let candidateFileNames = [
-            "Config.\(environment.rawValue)",
-            "Config"
-        ]
-
-        for fileName in candidateFileNames {
-            guard let url = Bundle.main.url(forResource: fileName, withExtension: "plist"),
-                  let dictionary = NSDictionary(contentsOf: url) as? [String: Any] else {
-                continue
-            }
-            return dictionary
-        }
-
-        return [:]
-    }()
-
+    // API key precedence:
+    // 1) Runtime env var OPENAI_API_KEY (set in Scheme or CI)
+    // 2) Info.plist value (injected from Secrets.xcconfig via INFOPLIST_KEY_OPENAI_API_KEY)
+    // 3) Empty string default
     static let apiKey: String = {
-        // Keep API keys out of source control and bundled config when possible.
-        // Preferred source is a runtime env var in the Run scheme or CI.
         let runtimeValue = ProcessInfo.processInfo.environment[Key.apiKey.rawValue]
         let runtimeKey = runtimeValue?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         if !runtimeKey.isEmpty {
             return runtimeKey
         }
 
-        return values.stringValue(for: Key.apiKey.rawValue, default: DefaultValue.apiKey)
+        return infoPlistString(for: Key.apiKey.rawValue) ?? DefaultValue.apiKey
     }()
-    static let model: String = values.stringValue(for: Key.model.rawValue, default: DefaultValue.model)
-    static let systemPrompt: String = values.stringValue(for: Key.systemPrompt.rawValue, default: DefaultValue.systemPrompt)
-    static let temperature: Double = values.doubleValue(for: Key.temperature.rawValue, default: DefaultValue.temperature)
+
+    static let model: String = infoPlistString(for: Key.model.rawValue) ?? DefaultValue.model
+    static let systemPrompt: String = DefaultValue.systemPrompt
+    static let temperature: Double = infoPlistDouble(for: Key.temperature.rawValue) ?? DefaultValue.temperature
+
+    // MARK: - Private
 
     private static func resolveEnvironment() -> AppEnvironment {
         if let runtimeEnvironment = AppEnvironment.parse(ProcessInfo.processInfo.environment[AppEnvironment.selectionKey]) {
@@ -103,5 +90,24 @@ enum AppConfig {
 #else
         return .prod
 #endif
+    }
+
+    /// Reads a string value from the generated Info.plist.
+    /// Returns nil if the key is missing or the trimmed value is empty.
+    private static func infoPlistString(for key: String) -> String? {
+        guard let value = Bundle.main.object(forInfoDictionaryKey: key) as? String else {
+            return nil
+        }
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
+
+    /// Reads a Double value from the generated Info.plist.
+    /// Info.plist values injected from xcconfig are always strings, so this parses the string.
+    private static func infoPlistDouble(for key: String) -> Double? {
+        guard let stringValue = Bundle.main.object(forInfoDictionaryKey: key) as? String else {
+            return nil
+        }
+        return Double(stringValue.trimmingCharacters(in: .whitespacesAndNewlines))
     }
 }
