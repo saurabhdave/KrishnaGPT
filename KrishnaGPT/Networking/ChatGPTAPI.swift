@@ -8,13 +8,13 @@
 import Foundation
 import SDOpenAIClient
 
-protocol ChatNetworking {
+protocol ChatNetworking: Sendable {
     func sendMessageStream(text: String, language: LanguageType) async throws -> AsyncThrowingStream<String, Error>
     func sendMessage(_ text: String, language: LanguageType) async throws -> String
     func clearHistory() async
 }
 
-final class ChatGPTAPI: ChatNetworking {
+final class ChatGPTAPI: ChatNetworking, Sendable {
     private let openAIClient: OpenAIClient
 
     init(

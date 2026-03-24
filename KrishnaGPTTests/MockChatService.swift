@@ -1,7 +1,7 @@
 import Foundation
 @testable import KrishnaGPT
 
-final class MockChatService: ChatNetworking {
+final class MockChatService: ChatNetworking, @unchecked Sendable {
     struct SendRequest: Equatable {
         let text: String
         let language: LanguageType

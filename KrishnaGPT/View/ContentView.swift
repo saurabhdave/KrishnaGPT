@@ -11,7 +11,7 @@ import UIKit
 struct ContentView: View {
     
     @Environment(\.colorScheme) private var colorScheme
-    @ObservedObject var viewModel: ChatGPTViewModel
+    @Bindable var viewModel: ChatGPTViewModel
     @FocusState var isTextFieldFocused: Bool
     @State private var lastAutoScrollCharacterCount = 0
     @State private var hapticImpact = UIImpactFeedbackGenerator(style: .medium)

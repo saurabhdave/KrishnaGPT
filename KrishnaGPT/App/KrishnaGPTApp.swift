@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct KrishnaGPTApp: App {
-    @StateObject private var vm: ChatGPTViewModel
+    @State private var vm: ChatGPTViewModel
 
     init() {
 #if DEBUG
@@ -26,7 +26,7 @@ struct KrishnaGPTApp: App {
                 systemPrompt: AppConfig.systemPrompt,
                 temperature: AppConfig.temperature
             )
-            _vm = StateObject(wrappedValue: ChatGPTViewModel(service: api))
+            _vm = State(initialValue: ChatGPTViewModel(service: api))
         } catch {
             fatalError("Failed to create ChatGPTAPI: \(error)")
         }

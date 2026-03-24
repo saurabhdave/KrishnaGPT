@@ -7,14 +7,10 @@
 
 import SwiftUI
 
-struct MessageRowView: View, Equatable {
-    static func == (lhs: MessageRowView, rhs: MessageRowView) -> Bool {
-        lhs.message == rhs.message && lhs.isLightMode == rhs.isLightMode
-    }
-    
+struct MessageRowView: View {
     let message: MessageRow
     let isLightMode: Bool
-    let retryCallback: (MessageRow) -> Void
+    let retryCallback: @Sendable (MessageRow) -> Void
     
     var body: some View {
         VStack(spacing: 12) {
@@ -158,6 +154,12 @@ struct MessageRowView: View, Equatable {
     
     private var bubbleShadowColor: Color {
         isLightMode ? Color.black.opacity(0.08) : Color.black.opacity(0.25)
+    }
+}
+
+extension MessageRowView: Equatable {
+    nonisolated static func == (lhs: MessageRowView, rhs: MessageRowView) -> Bool {
+        lhs.message == rhs.message && lhs.isLightMode == rhs.isLightMode
     }
 }
 

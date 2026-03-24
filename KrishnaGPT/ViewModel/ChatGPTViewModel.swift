@@ -6,14 +6,16 @@
 //
 
 import Foundation
+import Observation
 
 @MainActor
-final class ChatGPTViewModel: ObservableObject {
-    
-    @Published var isInteractingWithChatGPT = false
-    @Published var messages: [MessageRow] = []
-    @Published var inputMessage: String = ""
-    @Published var selectedLanguage = LanguageType.english
+@Observable
+final class ChatGPTViewModel {
+
+    var isInteractingWithChatGPT = false
+    var messages: [MessageRow] = []
+    var inputMessage: String = ""
+    var selectedLanguage = LanguageType.english
     
     var isSendDisabled: Bool {
         inputMessage.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
